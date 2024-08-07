@@ -1,0 +1,1076 @@
+Introducing API Fundamentals & Testing: Working with RESTful APIs
+When working with application programming interfaces (APIs), two popular tools are cURL and Swagger. cURL, a command-line utility, empowers direct HTTP requests from the terminal, while Swagger offers an interactive interface for exploring APIs, simplifying request and response inspection. Both enhance your API interaction capabilities. Begin this course by discovering common representational state transfer (REST) APIs that use JSON data. You will view the different types of data available and analyze the URLs of these APIs. Then you will use the Inspect feature of Chrome DevTools and the Swagger UI to view network requests. Next, you will learn how to use the client for URL (cURL) utility and place GET requests using cURL. You will work with POST requests to add new resources, use PUT and PATCH requests to completely and partially update resources, respectively, and use DELETE requests to remove resources. Finally, you will authenticate yourself with GitHub and explore GitHub API real-world use cases.
+Table of Contents
+    1. Video: Course Overview (it_stapitdj_02_enus_01)
+
+    2. Video: Viewing the Basic Structure of API URLs (it_stapitdj_02_enus_02)
+
+    3. Video: Using Chrome DevTools to View Network Requests (it_stapitdj_02_enus_03)
+
+    4. Video: Using the Swagger UI to Make Requests (it_stapitdj_02_enus_04)
+
+    5. Video: Viewing Responses with Different Status Codes and Response Types (it_stapitdj_02_enus_05)
+
+    6. Video: Installing cURL on macOS and Windows (it_stapitdj_02_enus_06)
+
+    7. Video: Installing jq on macOS and Windows (it_stapitdj_02_enus_07)
+
+    8. Video: Making GET Requests Using cURL (it_stapitdj_02_enus_08)
+
+    9. Video: Specifying Headers with cURL Requests (it_stapitdj_02_enus_09)
+
+    10. Video: Making POST Requests Using cURL (it_stapitdj_02_enus_10)
+
+    11. Video: Making PUT, PATCH, and DELETE Requests Using cURL (it_stapitdj_02_enus_11)
+
+    12. Video: Viewing cURL Configuration Options (it_stapitdj_02_enus_12)
+
+    13. Video: Authenticating to Use GitHub APIs (it_stapitdj_02_enus_13)
+
+    14. Video: Creating, Updating, and Deleting Repositories Using APIs (it_stapitdj_02_enus_14)
+
+    15. Video: Course Summary (it_stapitdj_02_enus_15)
+
+    Course File-based Resources
+
+1. Video: Course Overview (it_stapitdj_02_enus_01)
+
+In this video, we will discover the key concepts covered in this course.
+discover the key concepts covered in this course
+[Video description begins] Topic title: Course Overview. Presented by: Janani Ravi. [Video description ends]
+Hi, and welcome to this course working with RESTful APIs. My name is Janani Ravi, and I'll be your instructor for this course. When working with APIs, two popular tools are cURL and Swagger. cURL is a command line utility and it empowers direct HTTP requests from the terminal, while Swagger offers an interactive interface for exploring APIs simplifying request and response inspection. Both enhance your API interaction capabilities. You will start this course by exploring some common free-to-use test REST APIs that use JSON data. You will view the different types of data available and analyse the URLs of these APIs. You will then view network request using Chrome DevTools. You will use the Swagger UI- Swagger is a tool that will allow you to send requests and view responses from APIs in an interactive user interface right within your browser.
+
+Next, you will explore how to use the cURL utility- this is an extremely powerful tool that will allow you to send request to APIs using shell commands. You will explore how to place GET requests using cURL. You will then work with POST requests to add new resources, PUT and PATCH requests to completely and partially update resources, respectively, and DELETE requests to remove resources. Finally, you will explore how to work with GitHub APIs- GitHub is a widely-used version control system that allows users to create and manage their repositories using REST APIs. While all the APIs you worked with previously were test APIs with dummy data, GitHub will be your foray into real-world use cases of APIs. In conclusion, this course will provide you with a strong foundation and a hands-on foundation in the basics of REST APIs.
+
+2. Video: Viewing the Basic Structure of API URLs (it_stapitdj_02_enus_02)
+
+In this video, find out how to view common application programming interface (API) URL structures.
+view common application programming interface (API) URL structures
+[Video description begins] Topic title: Viewing the Basic Structure of API URLs. Presented by: Janani Ravi. [Video description ends]
+In this demo, in order to familiarize ourselves with REST APIs, we'll see how a few HTTP requests work. We'll work with APIs that are freely available on the Internet. These are sites that people have put up, so that you can test out different kinds of REST calls and understand how APIs work in general. Now, the first of the sites that we'll explore here is called jsonplaceholder.typicode.com, so head over to that URL on your browser. This website, as its documentation suggests, provides a Free fake API for testing and prototyping.
+
+[Video description begins] A web page titled JSONPlaceholder opens. On the top-right, it displays the following buttons: Guide, Sponsor this project, Blog, and My JSON Server. Below, it contains the following description: {JSON} Placeholder. Free fake API for testing and prototyping. [Video description ends]
+
+This project is run using sponsors. Notice on the top right that you can Sponsor this project if you want to. There are hundreds of thousands of people that use this site for API testing, and just to get a feel for how you'd send requests to REST APIs and receive responses, parse responses.
+
+You can see right here on this page that JSON placeholder serves roughly 2 billion requests each month. That's a lot of requests. Now, let's take a look at what APIs are available. We'll soon be hitting those APIs.
+
+[Video description begins] The page contains various details under the following sections: Sponsors, Try it, When to use, Resources, Routes, and Use your own data. [Video description ends]
+
+You can see there are certain companies who sponsor JSONPlaceholder. And here is an example of an API that you can hit. As we shall see, this is a simple GET request to retrieve data for a single todo, the todo with identifier 1.
+
+[Video description begins] The "Try it" section contains two boxes under a heading: "Run this code here, in a console or from any site". It also contains a Run script button. The first box displays multiple lines of commands. First line reads: fetch('https://jsonplaceholder.typicode.com/todos/1'). Second line reads: .then(response => response.json()). Third line reads: .then(json => console.log(json)). [Video description ends]
+
+This example is written using the fetch API, which is a built-in web API in modern web browsers for making HTTP request to retrieve data from a URL. It's not a library, but a part of the JavaScript language and the web platform. Now, we won't worry about JavaScript. We'll be working with cURL to explore API.
+
+And these are some of the APIs that we'll explore. Remember, REST APIs are built around the concept of resources, and here you can see the 6 common resources supported by this JSONPlaceholder site.
+
+[Video description begins] The Resources section displays the following options: /posts, /comments, /albums, /photos, /todos, and /users. [Video description ends]
+
+/posts is the path that you would access to retrieve a 100 different posts. /comments for 500 comments, /albums for a 100 different albums, todos, photos, users, and so on. If you scroll further down, you'll see Routes which tell you all of the HTTP verbs that the JSONPlaceholder site supports,
+
+[Video description begins] The Routes section displays the following options underneath: GET /posts, GET /posts/1, GET /posts/1/comments, POST /posts, PUT /posts/1, PATCH /posts/1, and so on. [Video description ends]
+
+GET, POST, PUT, PATCH, and DELETE. As the name JSONPlaceholder suggests, all of the data that is retrieved from this URL is in the JSON format. Let's go ahead and make the simple GET request, and you'll see how you get a response for a single todo in the JSON format.
+
+The JSON format is made up of entities enclosed in curly braces and the attributes of the entities are specified by fields and values.
+
+[Video description begins] The second box in the "Try it" section displays the following codes. First line reads: {. Second line reads: "userId": 1,. Third line reads: "id": 1,. Third line reads: "title": "delectus aut autem",. Fourth line reads: "completed": false. Fifth line reads: }. [Video description ends]
+
+userId is the field and 1 is the corresponding value. id is the field and 1 is the value for that. title is a field and whatever is there in Latin, delectus aut autem, that is the value for title. When you hit a URL on the browser, what you're making is a GET request. Let's say I were to click this /posts path.
+
+[Video description begins] The /posts option is highlighted under the Resources section. [Video description ends]
+
+I'm actually making a GET request to the JSONPlaceholder URL /posts.
+
+[Video description begins] A subsequent page opens with the following URL: jsonplaceholder.typicode.com/posts. It contains multiple lines of codes. [Video description ends]
+
+Observe the /posts along with the base URL for jasonplaceholder.typicode.com. And notice this now returns a list of JSON entities, where each entity is a post on a blog or some kind of site. Notice a list of JSON entities starts with square brackets, that's what denotes a list, and then each entity is enclosed in a pair of curly braces.
+
+And we have about a 100 different entities here. And the end of the list is terminated by using the closing square bracket, as you can see here at the bottom of your screen. By the way, if your JSON is not as nicely formatted as you see here on screen, I suggest you install a Chrome extension called JSON Formatter, which will format any JSON that you view in your browser in a nicely prettified format. Let's make a GET request to another path /todo. This will retrieve 200 todos from the server. Notice the URL path jsonplaceholder.typicode.com/todos,
+
+[Video description begins] A subsequent page opens with the following URL: jsonplaceholder.typicode.com/todos. It contains multiple lines of codes. [Video description ends]
+
+and we get a list of todo entities in the response. We've seen how we can retrieve a list of posts and a list of todos. Now, a common way to design your API is to have the identifier as a part of the path when you retrieve a single post, a single comment, or a single todo using a REST API call.
+
+When you make a GET request to /posts/1, this will retrieve the post with identifier 1 from the server. And observe we get just a single entity here in the response.
+
+[Video description begins] A page opens with the following URL: jsonplaceholder.typicode.com/posts/1. [Video description ends]
+
+Using the identifier as a part of the path to retrieve the entity associated with that identifier is a pretty standard way of designing your REST API. So, for example, if I were to hit /posts/4, I would retrieve the post entity with id 4, and you can see this here in the response.
+
+[Video description begins] The page now appears with the following URL:jsonplaceholder.typicode.com/posts/4. [Video description ends]
+
+Let's retrieve another post with a different identifier. This time I've chosen identifier 7, and you can see the single entity here in the response, the post with id 7. Now, you know the typical structure of the URL to access a list of resources and also a single resource. But sometimes certain resources might be nested with an outer resource. For example, every blog post may have a list of comments.
+
+Each list of comments is associated with a blog post. Now, here is how you might set up the path to the URL for the comments. posts/1/comments will retrieve all of the comments associated with the post that has id 1. And this is what you see here in the response.
+
+[Video description begins] A subsequent page opens with the following URL: jsonplaceholder.typicode.com/posts/1/comments. [Video description ends]
+
+Observe that the list of entities retrieved or resources retrieved are all comments, and every comment has postId set to 1, and each comment has its own unique identifier as well id 1, 2, 3, and so on. Now, in this API, let's say you wanted to retrieve all of the comments for the post with id 10. You specify /posts/10/comments.
+
+[Video description begins] The following URL is highlighted: https://jsonplaceholder.typicode.com/posts/10/comments. [Video description ends]
+
+Now, it's not really necessary that all REST API should be structured in this manner, but this is a pretty standard practice, so you should have an idea of intuitively how APIs are set up, which is why we are going through this exercise.
+
+The REST APIs in your organization might have a slightly different structure, but for the most part, this is the pattern that I've seen across the board, across different APIs followed as a best practice. Another common way to structure your API URLs is to use query parameters to specify what resource you want to retrieve.
+
+[Video description begins] The following option is highlighted in the Routes section: GET /comments?postId=1. [Video description ends]
+
+For example, here /comments?postId=1 retrieves all comments for the post with identifier 1. Here, /comments is a part of the path of the URL, and postId=1 is referred to as the query parameter, query string, or the query arguments to the URL. Notice the structure, we have the question mark after the path, and then postId=1. This is the query parameter. And here we've retrieved all of the comments associated with post 1.
+
+In order to retrieve the comments for a different post, you'll simply change the postId query parameter. postId=2 here retrieve comments for post with identifier 2. Whether you use path parameters or query parameters,
+
+[Video description begins] A new web page appears with the following URL:jsonplaceholder.typicode.com/comments?postId=2.. [Video description ends]
+
+that's up to the designer of the API, but both of these are common ways to retrieve individual resources by specifying identifiers. Query parameters can also be used to specify other options for your API, such as how the API is sorted, what page of the results you want to view, and so on. We'll see that in other demos in this path.
+
+3. Video: Using Chrome DevTools to View Network Requests (it_stapitdj_02_enus_03)
+
+Learn how to view network requests using Chrome DevTools.
+view network requests using Chrome DevTools
+[Video description begins] Topic title: Using Chrome DevTools to View Network Requests. Presented by: Janani Ravi. [Video description ends]
+If you are working with API's, whether you are developing APIs or testing APIs, there is a powerful set of tools that you should be aware of built into your browser.
+
+[Video description begins] A browser window is open with the following URL:jsonplaceholder.typicode.com /comments?postId=2. It displays multiple lines of codes. [Video description ends]
+
+Now, here we are working on the Chrome browser. But no matter what browser you use, whether it's Edge, whether its Firefox, all browsers have their own set of built-in tools. I give you a quick overview of these tools in Chrome. These are referred to as Chrome Developer Tools or just DevTools, and it's a set of web development and debugging tools built directly into the Google Chrome web browser. These tools are primarily designed to assist web developers and web designers in inspecting, analyzing, and debugging web pages and web applications. Now, if you are already using some API testing software such as Postman, these tools might be less relevant to you, but it's important for you to know they exist and know how to use them.
+
+So, let's bring up Chrome Developer Tools.
+
+[Video description begins] As she right clicks on the page, a drop-down menu appears with the following options: Exit Full Screen, Back, Reload, View Page Source, and Inspect. [Video description ends]
+
+And for that, all you need to do is right-click on the web page which is what you are working on, or whether API request are made and click on Inspect. And notice this brings up tools off to the right-hand side of my browser window. There are different tabs here that I can use to inspect
+
+[Video description begins] A blade appears on the right side of the page. The top menu bar contains various tabs such as, Elements, Console, Sources, Network, and Performance. Below, it displays multiple lines of codes. The blade also contains a pane at the bottom that includes various tabs. Some of the names are: Styles, Computed, Layout, and Properties. [Video description ends]
+
+the various parts of my web application. Elements allow me to view the HTML structure of the page, and the CSS Styles that apply to the various elements. For example, you can see the HTML elements that display the results of this HTTP call that we have made. You can hover over the elements, and the elements are highlighted within your web page. Now, these are going to be less useful for an API developer or tester.
+
+The Console tab is may be a little more useful. This is where you will be able to see any console log statements that have been output by the web page. There are none here, and that's why the Console tab is empty. Sources here refer to the source JavaScript file that actually make up this web page. Again, maybe not directly useful when we are working with APIs,
+
+[Video description begins] The Sources tab page opens and displays two tabs: Page and Workspace. The Page tab is active. It displays items in a hierarchical order on the left-side. At the bottom-left, it has various fields namely, Breakpoints, XHR/fetch Breakpoints, Global Listeners, and so on. The page also contains two tabs at the bottom-left. Their names are: Scope and Watch. [Video description ends]
+
+but it's important that you know that these details exist, so that if you ever need to use them, you know where to start. Network here, this is the tab that is going to be important for us.
+
+[Video description begins] The Network tab page includes various fields namely, Filter, Invert, Hide data URLs, and so on. Below, it displays the following tabs: All, Fetch/XHR, CSS, Media, Font, Doc, and so on. [Video description ends]
+
+This Network tab is what allows you to monitor all network requests made by a web page. Initially to retrieve the contents of a page, there might only be a single GET request, but the page then might make other requests behind the scenes.
+
+This might be POST request to add data, PUT request to update data, DELETE request, everything. All of that can be monitored using this Network tab. This is where you can monitor that the right API requests are being made by your application. What I'm going to do now is refresh this page. Refreshing this page will cause the GET request to be made once again. This is the GET request for the comments of post with Id 2. Once you refresh this page, observe that there are two requests that were made behind the scenes.
+
+[Video description begins] The Network page now displays details within a table. The names of the column headers are: Name, Type, Initiator, Size, Time, and Waterfall. [Video description ends]
+
+The first of these request is to retrieve the comments for the block post with Id 2, and if you select this, you will be able to see the details of the request and response. Observe that you can see the full Request URL, the base URL,
+
+[Video description begins] The page now displays a pane with the following tabs: Headers, Payload, Preview, and Response. The Headers tab contains three sections: General, Response Headers, and Request Headers. The General section displays information under the following headers: Request URL, Request Method, Status Code, Remote Address, and Referrer Policy. [Video description ends]
+
+then /comments and then ? and then the query string postId=2.
+
+Notice that the Request Method is GET. This is what we used to retrieve data. Observe that the Status Code that we have received is 304 Not Modified. Now, given that this was a successful request, you might have expected a 200 OK. The 304 Not Modified is a response Status Code that a web server sends to a client when the client has made a conditional GET request and the requested resource has not been modified since the last time the client requested it. The first time we hit this URL for the comments of postId 2, we retrieved the resource for the very first time, and the server sent along something known as an ETag identifier to identify the response that was sent for this request. When we refresh the page, the client sent the ETag back to the server to indicate that this is what I saw the last time you gave me the details of this particular resource.
+
+The server then realizes that since you last got the data, I haven't really changed the data in any way, so just reuse the data that you have cached on the client, and it returns 304 Not Modified. The 304 Modified is an indication to the client that the cached copy of the resource that it has on the client side can be reused. The resource hasn't changed since the client last requested it. There are number of other details about the response available here. Notice all of the Response Headers that were sent back.
+
+[Video description begins] The Response Headers section displays details under the following headers: Access-Control-Allow-Credentials, Age, Alt-Svc, Cache-Control, Cf-Cache-Status, Policy, Location, and so on. [Video description ends]
+
+Now, every response header has a different meaning. I won't really go into the details of those, but you can see the Response Headers as well as the Request Headers that was sent by the GET request from our web page.
+
+[Video description begins] The Request Headers section displays details under the following headers: :authority, :method, :path, :scheme, and so on. [Video description ends]
+
+Now, let's keep DevTools open, and let's make a request for the comments of a post that we haven't viewed before. Let's say postId 22. But you can pick any number that's valid.
+
+[Video description begins] She now opens a web page with the following URL: https://jsonplaceholder.typicode.com/comments?postId=22. The blade present on the right side of the page displays the information under the Network tab table. [Video description ends]
+
+Observe that the GET request was made behind the scenes. You can see the very first request here. If you select this, you will be able to see the details of the request. This time around observe that the Status Code that was returned was 200 OK.
+
+[Video description begins] The Status Code header is highlighted under the General section of the Headers tab. [Video description ends]
+
+That's because we haven't previously made a request to retrieve the comments for this post, and the server had to send the response afresh. The response wasn't previously cached on the client. So, the server sends a 200 saying yes, I have the response for you, and here are the details of the comments for post 22. And then, of course, we have the Request Header, the Response Headers, and all of the other details. Now that you have viewed the details of this page, let's say you were to refresh this page once again. This time around, if you look at the response, you will see that it is a 304 Not Modified.
+
+This is a performance enhancement that browsers use behind the scenes with the APIs that they call to ensure that unnecessary data isn't sent back. Now, let me show you something interesting. I'm going to modify the URL here in two different ways. I'm going to retrieve the comments for a different post, post with Id 44. Observe that so far we made a request to https URLs. Now, I am going to make a request to an http URL, which is also supported for JSON placeholder. Let's go ahead and make this GET request, and observe here in the Network tab that we have two request, two API requests that were made behind the scenes.
+
+[Video description begins] A new web page opens with the following URL: http://jsonplaceholder.typicode.com/comments?postId=44. The blade present on the right side of the page displays the information under the Network tab table. [Video description ends]
+
+Now, why do we have two instead of one? Well, let's take a look at these requests.Look at the very first one. I am going to select this, and notice that this is the request to the original http URL that we have specified on the browser with post Id 44.
+
+[Video description begins] The following request is selected: comments?postId=44. The Headers tab gets active on the bottom-right side of the Network tab page. [Video description ends]
+
+The Status Code that was returned for this GET request was 307 Internal Redirect (from disk cache). Status Codes that are in the 300s are typically redirect status codes. The 307 is a temporary redirect used in the HTTP protocol to indicate that the resource that we have requested has temporarily moved to a different URL, and the client should make a new request to that new URL to access the resource. On receiving this Status Code and the response the 307 Redirect is less commonly used than other response codes, such as 301 for permanent redirect and 302 Found status codes.
+
+A 307 Redirect instructs the client here, it's the web browser, to maintain the original HTTP request method while making the new request to the redirected URL. And here in the Response Header, notice that we have a Location header that indicates what the new URL the request should be redirected to, one that starts with https. So, what the browser then does is make the same GET request to an https URL, and that is the second request that you see here. This is the new request made by the browser with an https URL after the browser was redirected from the http URL, and this request returns with a Status Code of 200 and the response.
+
+4. Video: Using the Swagger UI to Make Requests (it_stapitdj_02_enus_04)
+
+During this video, discover how to make requests using the Swagger user interface (UI).
+make requests using the Swagger user interface (UI)
+[Video description begins] Topic title: Using the Swagger UI to Make Requests. Presented by: Janani Ravi. [Video description ends]
+So far, we worked with GET request by simply typing in a URL on the browser. In this demo, we'll see how we can make other kinds of requests to REST endpoints. Again, we will work only in the browser. We won't use any kind of utility, but we will make use of something called the Swagger UI. First let's head over to another fake API REST endpoint available on the Internet, that is the httpbin.org site.
+
+[Video description begins] A web page titled httpbin.org opens. It contains the following description: A simple HTTP Request & Response Service. Below, it displays a field named Run locally that contains a command. It reads: $ docker run -p 80:80 kennethreitz/httpbin. Below, it displays various sections namely, HTTP Methods, Auth, Status codes, Request inspection, Dynamic data, Cookies, and so on. The page also contains a HTTPS drop-down field under the heading: Schemes. [Video description ends]
+
+This is A simple HTTP Request & Response Service. It's also possible to host this httpbin REST API locally by running it within a Docker container, but we will use this web-hosted one. The httpbin.org site is basically a site that you can use to work with different kinds of HTTP request. You can use the site to test out your understanding of different HTTP verbs, GET, PUT, POST, DELETE, and so on.
+
+Different authorization methods such as basic authentication, digest authentication, different kinds of responses, different kinds of status codes, work with cookies, images, a whole range of features. The structure of the site that you see here is essentially a Swagger UI. Swagger UI is an open-source user interface framework that allows developers to visualize and interact with the APIs that they create. And we are going to using this Swagger UI to interact with the httpbin site. This will allow us to make PUT, POST, DELETE, PATCH, and other HTTP requests from the browser directly. This Swagger UI is a part of the Swagger toolset which includes tools for designing, building, and documenting RESTful APIs. The Swagger UI generates interactive documentation for your RESTful APIs. It also allows for interactive exploration.
+
+Users can explore the API endpoints, see the available resources, see the HTTP methods that they support, request-response form as an, even try out the API request directly within the UI. And essentially it is this Swagger UI that has been generated for this httpbin.org site that we will use to interact with the different APIs available here using different HTTP verbs. So, let's get started. Notice that only HTTPS URLs are supported, so all of the URLs here are secure. Let's take a look at the HTTP Methods supported. Observe that you can make GET request,
+
+[Video description begins] The HTTP Methods section expands and displays multiple options. Their names are: DELETE, GET, PATCH, POST, and PUT. [Video description ends]
+
+PATCH, POST, DELETE, all kinds of requests. We will look at a simple GET request first. Click on this option and observe you see a nice little user interface indicating how you actually use this GET request.
+
+[Video description begins] The GET option is active. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a drop-down field named Response content type. Below, it displays a table with two column headers: Code and Description. [Video description ends]
+
+There are No parameters that you need to specify and the only response that this API returns is a status Code of 200. Now, if you click on this Try it out button for this GET request, you can actually execute this GET request from within the Swagger UI. So, let's click on that, no parameters need to be specified.
+
+[Video description begins] A button appears under the Parameters section named Execute. [Video description ends]
+
+Simply click on Execute and the browser will make a GET request behind the scenes to httpbin.org/get. Observe that you get a number of interesting details here,
+
+[Video description begins] The Parameters section now displays two buttons: Execute and Clear. Below, the Responses section displays 3 sub-sections named: Curl, Request URL, and Server response. The Curl sub-section displays the following command: curl -X GET "https://httpbin.org/get" -H "accept: application/json". The Request URL sub-section displays the following URL: https://httpbin.org/get. [Video description ends]
+
+you get a curl command to show you what request was exactly made. curl is a command line utility that you can use to make HTTP request from your terminal window, we will use that in a bit. This is the curl command that you can run to make the same request from your terminal. Notice the Request URL that was hit httpbin.org/get and here you can see the details of the response. A status Code of 200 was received.
+
+The Response body is just a JSON body which contains the details of the request that was actually made, the arguments that were passed, the headers that were passed in and the url that we actually accessed, and so on.
+
+[Video description begins] The Server Response sub-section contains two columns named: Code and Details. The Details column displays two boxes underneath. Their names are: Response body and Response headers. The Response body box displays multiple lines of codes. [Video description ends]
+
+So, you can see it's a very simple request, there's nothing really special here. Now we made this GET request from within the Swagger UI, but you can actually copy this URL over and paste it in your browser and that will make the same GET request and you see the same JSON response here within your browser. Let's go back to the Swagger UI page on httpbin.org.
+
+[Video description begins] A web page named httpbin.org/get opens and displays multiple lines of codes. [Video description ends]
+
+Let's Clear the current GET request that we made and let's open up Chrome Dev tools and take a look at the network request that are made behind the scenes when we actually execute these requests.
+
+[Video description begins] She moves back to the httpbin.org page and right clicks on the page. A drop-down menu appears with the following options: Exit Full Screen, Back, Reload, View Page Source, and Inspect. She selects the Inspect option. A blade appears on the right side of the page. The top menu bar contains various tabs such as, Elements, Console, Sources, Network, and Performance. The Network tab is active. It displays various fields namely, Filter, Invert, Hide data URLs, and so on. Below, it displays the following tabs: All, Fetch/XHR, CSS, Media, Font, Doc, and so on. It also displays a table with the following column headers: Name, Type, Initiator, Size, Time, and Waterfall. [Video description ends]
+
+Let's go straight to the Network tab here and what I'm going to do is execute this GET request once again. Click on Execute and you can see that a get request was made to the server.
+
+[Video description begins] As she clicks on the Execute button present in the httpbin.org/get page, a new entry appears in the Network page table. [Video description ends]
+
+There was no doubt about that but you can see the get request, the response, and you can see this within Dev tools as well.
+
+[Video description begins] A pane appears beside the table that contains the following tabs: Headers, Preview, Response, Initiator, and Timing. The Headers tab contains three sections: General, Response Headers, and Request Headers. The General section displays information under the following headers: Request URL, Request Method, Status Code, Remote Address, and Referrer Policy. [Video description ends]
+
+You are familiar with GET request. Let's look at making some other kinds of requests using the Swagger UI. I'm going to clear this output of the GET request, close the GET section, and open up the POST request.
+
+[Video description begins] The POST option is active in the httpbin.org page. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a table with two column headers: Code and Description. [Video description ends]
+
+Now a POST request is typically used to add a resource to the server. Let's try out this POST. This POST takes in No parameters. It's not actually going to add anything. It will just make a POST request to httpbin.org/post. Once you click on Execute here what you have done is made a POST request to the URL and you can see the Response body of the POST request.
+
+[Video description begins] The Parameters section under POST option now displays two buttons: Execute and Clear. Below, the Responses section displays 3 sub-sections named: Curl, Request URL, and Server response. The Curl sub-section displays the following command: curl -X POST "https://httpbin.org/post" -H "accept: application/json". The Request URL sub-section displays the following URL: https://httpbin.org/post. [Video description ends]
+
+Again, all of this is just fake, it doesn't really matter, it's not meaningful. It will get more meaningful in later demos. But you can see within Chrome Dev tools that a post request was made.
+
+[Video description begins] On the right blade, the table in Network page now displays a new entry named post. The General section under the Headers tab displays the corresponding information. It has the following headers: Request URL, Request Method, Status Code, Remote Address, and Referrer Policy. [Video description ends]
+
+With the post selected, notice the Request URL, https://httpbin.org/post, the Request Method is POST, and the Status Code is 200. Let's now close out this POST section and make a different request from the Swagger UI. Click on the PUT section and let's execute the PUT method. Go ahead and Try it out. Click on Execute.
+
+[Video description begins] The PUT option is active in the httpbin.org page. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a table with two column headers: Code and Description. [Video description ends]
+
+Once again, the PUT takes in No parameters for this particular site.
+
+[Video description begins] The Parameters section under PUT option now displays two buttons: Execute and Clear. Below, the Responses section displays 3 sub-sections named: Curl, Request URL, and Server response. The Curl sub-section displays the following command: curl -X PUT "https://httpbin.org/put" -H "accept: application/json". The Request URL sub-section displays the following URL: https://httpbin.org/put. [Video description ends]
+
+It will be different when we actually set up our API. Notice in Dev tools that a put request was made. Let's quickly click on the put request in Dev tools and see the details of the request. Notice the Request Method is PUT. Notice the Request URL and the Status Code that we received was 200 OK.
+
+[Video description begins] On the right blade, the table in Network page now displays a new entry named put. The General section displays the corresponding information under the following headers: Request URL, Request Method, Status Code, Remote Address, and Referrer Policy. [Video description ends]
+
+There are other details here, but we can ignore all of those in this very initial phase of learning about APIs. Let's go back and look at a different request. This time we will try out the PATCH request
+
+[Video description begins] The PATCH option is now active in the httpbin.org page. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a table with two column headers: Code and Description. [Video description ends]
+
+and take a look at this request verb in Dev tools. Click on Try it out, click on Execute. Again, this simple PATCH request takes in No parameters on httpbin.org.
+
+[Video description begins] The Parameters section under PATCH option now displays two buttons: Execute and Clear. Below, the Responses section displays 3 sub-sections named: Curl, Request URL, and Server response. The Curl sub-section displays the following command: curl -X PATCH "https://httpbin.org/patch" -H "accept: application/json". The Request URL sub-section displays the following URL: https://httpbin.org/patch. [Video description ends]
+
+We made the PATCH request and you can see the patch here within Dev tools in Chrome. Let's click on the patch request that was executed and you can see that the Request URL was httpbin.org/patch and the Status was 200 OK and the Request Method is PATCH. And the last kind of HTTP request that we will look at here is the DELETE request.
+
+[Video description begins] The DELETE option gets active in the httpbin.org page. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a table with two column headers: Code and Description. [Video description ends]
+
+So, close all of the other sections and open up the DELETE section. All of these are fake requests. Nothing actually happens on the server when we perform a DELETE.
+
+Let's go ahead and Execute this request and we will be able to see that this request was made in the Network tab of Chrome Dev tools. If you now select the delete request within Dev tools,
+
+[Video description begins] The Parameters section under DELETE option now displays two buttons: Execute and Clear. Below, the Curl sub-section displays the following command: curl -X DELETE "https://httpbin.org/delete" -H "accept: application/json". The Request URL sub-section displays the following URL: https://httpbin.org/delete. [Video description ends]
+
+you can see the Request URL at /delete, Request Method is DELETE, and the Status Code is 200 OK. Now, purposely as we explored the different kind of request that you can make from the Swagger UI, I haven't looked at the responses. That's because all of these have been fake requests. Nothing actually happens at the other end on the server when we perform like a PUT, POST, PATCH, or DELETE. So, the responses did not really matter, which is why we didn't pay attention to the response.
+
+5. Video: Viewing Responses with Different Status Codes and Response Types (it_stapitdj_02_enus_05)
+
+Find out how to view responses and status codes.
+view responses and status codes
+[Video description begins] Topic title: Viewing Responses with Different Status Codes and Response Types. Presented by: Janani Ravi. [Video description ends]
+Let's explore some other endpoints here on http://bin.org. It'll allow us to learn how API requests work better,
+
+[Video description begins] The httpbin.org page is open. It displays the following sections: HTTP Methods, Auth, Status codes, Request inspection, Response inspection, Response formats, Dynamic data, Images, and so on. The page also displays a blade on the right-side. It contains a top menu bar that has the following tabs: Elements, Console, Sources, Network, and Performance. The Network tab is active. It displays various fields namely, Filter, Invert, Hide data URLs, and so on. Below, it displays a list of entries within a table. Next to it, a pane displays with the following tabs: Headers, Preview, Response, and Timing. [Video description ends]
+
+and we'll focus now first on Status codes.
+
+[Video description begins] The Status codes section expands and displays multiple options. Their names are: DELETE, GET, PATCH, POST, and PUT. [Video description ends]
+
+If you want to kind of explore and understand the different status codes that can be returned by a server response, here is where you do it. Notice that you can get different Status codes for different kinds of requests, Delete, PUT, POST, GET, everything. We'll primarily work with the GET method and explore the different Status codes. Click on the GET API here in this Swagger UI
+
+[Video description begins] The GET option is active. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a drop-down field named Response content type. Below, it displays a table with two column headers: Code and Description. [Video description ends]
+
+and let's try out receiving different status codes from the server. If you scroll down here in the documentation section, you'll get a quick overview of the different categories of status codes.
+
+Status codes that are in the 100s are Informational responses from the server, in the 200s are Success responses, in the 300s are Redirect responses, 400s are Client Errors, and in the 500s are Server Errors. Let's try out this API that will allow us to return different status codes. Click on Try it out and you can see that within the path of the URL, you can specify the status code that you want in the response.
+
+[Video description begins] A field appears under the Parameters section named codes. Underneath, it displays a button named Execute. [Video description ends]
+
+The request will be made to /status and the code that you specify. In this first instance here, I've specified 200 as status code and I'm going to click on Execute and the response will be a 200. If you scroll down below, you'll be able to see the 200 response
+
+[Video description begins] The Parameters section now displays two buttons: Execute and Clear. Below, the Responses section displays 3 sub-sections named: Curl, Request URL, and Server response. The Curl sub-section displays the following command: curl -X GET "https://httpbin.org/status/200" -H "accept: text/plain". The Request URL sub-section displays the following URL: https://httpbin.org/status/200. The Server Response sub-section contains two columns named: Code and Details. The Details column displays two boxes named Response body and Response headers. The Response body box displays multiple lines of codes. [Video description ends]
+
+that was received from this URL. In the Network tab, you can see the request that we just made, and if you click on that request, you'll see that the Request URL was httpbin.org/status/200. It was a GET request and this returned a Status Code of 200 OK. We've seen the status code before,
+
+[Video description begins] On the right blade, the table in Network page now displays a new entry named 200. It is highlighted. The right pane displays information under a section named General. It has the following headers: Request URL, Request Method, Status Code, Remote Address, and Referrer Policy. She highlights the information given under the Request URL, Request Method, and Status Code headers. [Video description ends]
+
+but what if you want to return a different status? Let's say you want to return a 404. A 404 means that a particular resource that you were looking for was not found on the server, and if you click on Execute as we've just done,
+
+[Video description begins] As she enters the 404 number in the codes field, the Curl sub-section in the httpbin.org page displays the following command: curl -X GET "https://httpbin.org/status/404" -H "accept: text/plain". The Request URL sub-section displays the following URL: https://httpbin.org/status/404. [Video description ends]
+
+you can see the response here was a code 404 and you can see this within Dev tools in red. Error requests are highlighted in red. You can see the Request URL ends with a /404 and the Status Code that was returned was 404 Not Found.
+
+[Video description begins] The Network page table displays a new entry named 404. [Video description ends]
+
+Now let's try a different client error. Notice the path I have specified is 403. This is where you're forbidden to access this particular URL. This is when you receive that Status Code. Click on Execute and you can see the response that we receive is a 403.
+
+Within Dev tools, you can see the 403 as an error request.
+
+[Video description begins] The Curl sub-section in the httpbin.org now displays the following command: curl -X GET "https://httpbin.org/status/403" -H "accept: text/plain". The Request URL sub-section displays the following URL: https://httpbin.org/status/403. [Video description ends]
+
+Select the 403 and you can see 403 Forbidden. This is when you're not authorized to access this particular resource
+
+[Video description begins] The table in the Network page tab displays new entry called 403. She moves to the right-side pane and highlights the details under the General section. [Video description ends]
+
+and you haven't provided the right credentials. 404 and 403 are client errors because they are in the 400 series. Let's try a server error. I'm going to make a request to the path 501 to get 501 as the error code that we receive in the response. Let's select this 501 request here in the Dev tools tab.
+
+[Video description begins] As she enters the 501 code, the Curl sub-section displays the following command: curl -X GET "https://httpbin.org/status/501" -H "accept: text/plain". The Request URL sub-section displays the following URL: https://httpbin.org/status/501. [Video description ends]
+
+This is where we received 501 Not Implemented. Whatever request we were trying to make, that was not implemented in the server that we hit. Now let's explore some status codes in the 300 series. Let's explore a 304.
+
+We're familiar with the 304 status code. This is where the server tells us that the response of this URL has not changed since we last made the request, so we can reuse the response from cache. Let's click on Execute. You can see from the Dev tools tab that 304 is not an error. It's not in red. If you click on 304, you can see that it's Not Modified. The next status code that we access is the 303. 303 See Other is a status code which indicates that the response to the request can be found at a different URL and the client should make a new GET request to the different URL to retrieve the resource. Let's click on Execute and see how the browser treats this. Notice at the bottom here in Chrome Dev tools that there are three different requests. The first is the 303, notice it's the 303 See Other.
+
+[Video description begins] She now enters the 303 number in the codes field and clicks on the Execute button. The table in the Network tab page displays 3 new entries: 303, 1, and get. The Status Code header displays the following detail: 303 See Other. The Response Headers section at the bottom displays the following headers: Access-Control-Allow-Credentials, Date, Location, and so on. [Video description ends]
+
+In the Response Headers section, notice the Location, the Location says /redirect/1. The 303 indicates to the client that this is the resource that the client should be making the next request to.
+
+So, notice that the next request that I have selected is to this URL.
+
+[Video description begins] She selects the entry "1" present in the table. [Video description ends]
+
+Observe the Request URL httpbin.org/redirect/1. This in turn gives us a response with the Status Code 302 Found, which indicates that the requested resource temporarily resides under a different URL where it can be found. This is used for redirection. So, where should the client go to actually access this resource? Well, that's present in the response header. Notice the Location header says go to the URL /get. That's where the actual response will be available.
+
+[Video description begins] In the table, she moves on to the next entry, "get". [Video description ends]
+
+So, the browser goes ahead and makes a GET request to httpbin.org/get. That's the request URL that you see here and we finally get the response from here. This then gives us a Status 200 OK.
+
+Just like you can make requests that give you different status codes in the response, you can also make requests that give you responses in different response formats here on httpbin.org. If you select Response formats here, you'll see a number of different URLs that returns responses using different formats.
+
+[Video description begins] The Response formats section opens and displays the various options. Some of the options are: GET /brotli, GET /deflate,GET /deny, GET /html, and so on. [Video description ends]
+
+At the bottom, you can see /xml will give you an XML response, /json a JSON response, /html an HTML response. Let's look at one of these. Let's take a look at how we can receive an HTML response from the server. When you expand this API, observe here that the Response content type is set to text/html.
+
+[Video description begins] The GET /html option is active. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a drop-down field named Response content type. Below, it displays a table with two column headers: Code and Description. [Video description ends]
+
+This is actually a header that we'll send in our request to indicate that the response that we are expecting is in the HTML format. Let's try out this URL. Click on the Execute button to actually make this request and you'll see that the response that you receive is in the HTML format. This HTML response is not very easy to read and understand,
+
+[Video description begins] The Responses section displays 3 sub-sections named: Curl, Request URL, and Server response. The Server Response sub-section contains two columns named: Code and Details. The Details column displays two boxes underneath. Their names are: Response body and Response headers. The Response body box displays multiple lines of text. [Video description ends]
+
+but this is something that the browser can parse and display to you in a user-friendly format. Let me scroll back up and show you what request was actually made to get the response in the HTML format. And here the details are in the curl command. We haven't studied curl yet but notice the -H flag that we passed to curl, that is a header that we are passing in our request. The request header, accept: text/html
+
+[Video description begins] The Curl sub-section displays the following command: curl -X GET "https://httpbin.org/html" -H "accept: text/html". [Video description ends]
+
+tells the server that we are expecting the response in the HTML format. Now let's try one last kind of response, something that returns an image and you'll see how we use a header to specify the format in which we expect the response here as well.
+
+Click on the Images section here and you can see different URLs that returns images in different formats.
+
+[Video description begins] The Images section opens and displays the various options. Some of the options are:GET /image, GET /image/jpeg,GET /image/png, and GET /image/webp. [Video description ends]
+
+Let's try hitting the URL that will return a simple JPEG image. When you click on the Try it out button here, notice that the Response content type here is image/jpeg.
+
+[Video description begins] The GET /image/jpeg option is active. It displays two sections: Parameters and Responses. The Parameters section contains a button named Try it out. The Responses section contains a drop-down field named Response content type. Below, it displays a table with two column headers: Code and Description. [Video description ends]
+
+That is the header that we'll be specifying as a part of our request. Click on the Execute button here and make the request.
+
+[Video description begins] The Curl sub-section displays the following command: curl -X GET "https://httpbin.org/image/jpeg" -H "accept: image/jpeg". [Video description ends]
+
+Notice the curl command which says I'm accepting an image/jpeg, that is the response type that I'm expecting. And if you scroll to the bottom, you can see the Response body contains an image that has been rendered and displayed here on screen.
+
+[Video description begins] The "Response body" box now displays an image. [Video description ends]
+
+6. Video: Installing cURL on macOS and Windows (it_stapitdj_02_enus_06)
+
+During this video, you will learn how to install client for URL (cURL) on Mac and Window.
+install client for URL (cURL) on Mac and Window
+[Video description begins] Topic title: Installing cURL on macOS and Windows. Presented by: Janani Ravi. [Video description ends]
+So far, we've been making all of our API requests via the web browser. And we used the Swagger UI to make HTTP GET, PUT, POST, PATCH, and other requests. Well, in this demo, we will download and install a command line utility that will allow us to make requests from our local machine and that is the curl utility. Now in order to see what curl is all about, let's head over to curl.se. curl is a command line tool and library for transferring data with URLs.
+
+[Video description begins] A web page titled curl:// opens with the following URL: https://curl.se. It contains the following description: command line tool and library for transferring data with URLs. The page contains various information under the following headings: Supports..., What's curl used for?, Who makes curl?, What's the latest curl?, and so on. At the top, it displays multiple options namely, Download, Documentation, libcurl, Get Help, and News. [Video description ends]
+
+And you can see that curl has been around for a very long time. It has been around since 1998. That's ancient. curl is short for client for URLs and it's a versatile and widely used tool in Unix-like operating systems including Linux and macOS. curl can also be used on Windows and in fact, comes preinstalled on all the latest Windows operating systems.
+
+You can see that curl supports a variety of different formats for data transfers, and it's typically used in command lines or scripts to transfer data. But curl has used in other use cases as well, and you can read all of the different uses for curl here. curl is a free and open source software and there are thousands of contributors who help build curl to what it is today. It's been around for 25 years. At the time of this recording, the latest version of curl is 8.4.0, but for all of the operations that we'll be performing with curl, even if you have a slightly older version, that should suffice, make sure it's not really old like curl 5 or something. Now there is a lot to learn in curl. If you are mastering curl, there is a three-hour deep dive video tutorial here that will help you. But for us, we just want to get curl set up and see how we can make basic HTTP request to REST APIs with curl. And that's really straightforward as you shall see.
+
+Now let's head over to Downloads to see how you can download and install curl on your local machine.
+
+[Video description begins] The Download page opens. It contains various sections under the heading: Releases and Downloads. The names of the sections are: Source Archives, Download Wizard, Packages, and so on. The Packages section lists various options under the following column headers: Package, Version, Type, and Provider. Each option includes many sub-options underneath. Some of the option names are: AIX, AmigaOS, BeOS, DOS, macOS, Windows 64-bit, and so on. On the right side, the page contains a list box that displays links of all the given options. Some of the names are: AIX, AmigaOS, BeOS, Dragonfly BSD, Linux, Mac OS X, Mint, and so on. [Video description ends]
+
+You will see here that curl is available for all kinds of operating systems and all variations of operating systems. Whether you are on macOS, Windows, Linux, curl should be available for you. Now, let's say you are running on a macOS machine. Click on the Mac OS X option and you will see how you can download and get set up with curl. Now there are various ways in which you can get curl, but Homebrew is by far the most popular and widely used. If we click on Homebrew here, you will see what Homebrew is all about and how you can install Homebrew on your local machine.
+
+[Video description begins] A new web page opens named Homebrew. It contains an option named Install Homebrew that displays the following command: $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)". [Video description ends]
+
+Homebrew is a package management system for macOS and Linux machines. Homebrew makes package management and installation of software and development tools very very simple and straightforward.
+
+So, if you are working with Linux or macOS, it's quite likely you already have Homebrew. If you don't, simply run this command that you see here at the center of the screen, the /bin/bash command to install Homebrew on your machine. And once you have Homebrew, we'll use Homebrew to install the latest version of curl. Let's go back to the curl Downloads page and see how we can get set up with curl. Click on the latest version 8.4.0 and here you will find the Homebrew command that you can use to install curl.
+
+[Video description begins] A web page opens named Homebrew Formulae. It contains a command under the heading Install command. It reads: $ brew install curl. Below, it displays details under the following headings: License, Formula JSON, Formula code, and "Bottle (binary package) installation support provided for". The "Bottle (binary package) installation support provided for" heading contains two options: Apple Silicon and Intel. [Video description ends]
+
+It's simply brew install curl and the same command can be used for all variations of macOS that you are running whether you are running on Apple Silicon or Intel processors.
+
+Now I have shown you what you need to do to install curl on your macOS or Linux machine if you don't already have curl available. But it's quite likely that a built-in version of curl is already available on macOS or Linux and you can simply use that version. Here I am in the terminal window of my macOS machine. I'm going to run curl --version to see what version of curl I have available and whatever version it is for our purposes, that's the version we are going to use. You can see that I have a fairly recent version 7.87.0 and this is good enough. You don't really need to upgrade to the latest version to use curl. Now if you want to see what options you have with the curl command line utility run curl --help and this will show you a slew of options.
+
+[Video description begins] The Terminal window displays the following options as output. -d, -f, -h, -i, and so on. [Video description ends]
+
+We won't really focus on all of the possible flags that you can use here, but we will be using the -d flag to specify the POST data within our request body.
+
+If you want to access the curl man page, simply type man curl and you will get an exhaustive list of options that you can use with curl. These options that you see here are really for advanced uses of curl. For our purposes, for basic usage, whatever we cover in the demos that follow should be more than sufficient. You now know how to get set up with curl on your macOS or Linux machines. Let's switch over to a Windows machine and see how we can get set up with curl on Windows. Once again, this setup is really only needed if you don't already have curl installed and for most recent Windows installations, curl is already available. Let's head over to the Download link here, click on Download, and you will find all of the different ways you can install curl on different operating systems. And if you scroll down somewhere in the middle of the page, you will find the links or windows.
+
+[Video description begins] The Download page reopens. She selects the following option: Windows 64-bit. The option further displays multiple sub-options. [Video description ends]
+
+In order to install curl on Windows, you can use different techniques you can use the Chocolatey or Winget package manager or you can simply install and set up the curl binary. I'll show you the process of installing curl on Windows using the curl binary. However, I am not going to upgrade my local curl installation to point to this new version.
+
+[Video description begins] A page appears with the following path: curl/Download/Windows downloads. It displays details under the following sections: curl 8.4.0 for Windows, Fixed URLs, Specifications, and so on. The curl 8.4.0 for Windows section contains 3 options: curl for 64-bit, curl for 64-bit (ARM64), and curl for 32-bit. [Video description ends]
+
+Because I already have curl installed, I don't want to mess with that. Now, here you will find binaries for the different Windows operating systems. The 64-bit is the one I am going to select because it's quite likely you are running a 64-bit machine. Those are the newer machine.
+
+If you have an older 32-bit machine, well, just pick curl for 32-bit. Now download this binary onto your local machine and this will be downloaded in the MinGW format that you can then extract.
+
+[Video description begins] As she clicks on the Download folder button present on the above toolbar, a drop-down menu appears. It lists the following file: curl-8.4.0_6-win64-mingw.zip. [Video description ends]
+
+Here is the curl binary that I just downloaded within my Downloads folder. I am going to select, right-click, and Extract this binary
+
+[Video description begins] The Downloads folder opens. The left pane contains a list of the following options: Desktop, Downloads, Documents, Pictures, and so on. The Downloads option is active. The main pane displays a folder under the following column headers: Name, Date Modified, Type, and Size. [Video description ends]
+
+so that the curl executable is available.
+
+[Video description begins] As she selects the Extract All option from the context menu, a dialog box opens named Extract Compressed (Zipped) Folders. It contains the following link: C:\Users\loonycorn\Downloads\curl-8.4.0_6-win64-mingw. [Video description ends]
+
+You can pick which folder you want the curl binary to be extracted into. Once extraction is complete, curl is now available on your machine. And if this is the first time that you are installing curl, you might want to set your path variable to point to your curl installation. But like I said, it's very likely you already have curl installed and this binary installation will not really mess with that because it will have been set up on a different path. Now within this folder, you will find a bin sub folder where you will find an executable called curl.
+
+If you want to run the latest version of curl, this is the executable that you will invoke. In the meanwhile, I'll open up the Command Prompt on my Windows machine. Go to the Windows menu and search for cmd and select the Command Prompt option. Here is the Command Prompt and if you run curl --version here, you can see that it points to the pre-installed version of curl that I have on my Windows machine, curl version is 8.0.1.
+
+[Video description begins] A Command Prompt window opens with the following prompt: C:\Users\loonycorn>. She enters the following command: curl --version. [Video description ends]
+
+This is a fairly recent version.
+
+If you do not want to mess with the current version that you have, just stick with that version and that's totally fine. However, just in case, you want to run the new version of curl that we just installed, you can head over to this bin folder. Now within this bin folder, we have the curl executable. So, if you run a dir command, you will find the curl.exe file here and if you want to run this particular curl,
+
+[Video description begins] The following command is displayed: C:\Users\loonycorn\Downloads\curl-8.4.0_6-win64-mingw\curl-8.4.0_6-win64-mingw\bin>dir. [Video description ends]
+
+simply type curl within this folder.
+
+[Video description begins] The following command is displayed now: C:\Users\loonycorn\Downloads\curl-8.4.0_6-win64-mingw\curl-8.4.0_6-win64-mingw\bin>curl --version. [Video description ends]
+
+When you run curl --version here, you will access the latest version of curl that we have downloaded as a binary. In this way, you are not messing around with the version of curl that has been installed on your machine, instead, you are just using the curl executable directly from the bin subfolder.
+
+7. Video: Installing jq on macOS and Windows (it_stapitdj_02_enus_07)
+
+Discover how to install jq to view formatted JSON data.
+install jq to view formatted JSON data
+[Video description begins] Topic title: Installing jq on macOS and Windows. Presented by: Janani Ravi. [Video description ends]
+When we make requests to REST APIs using the curl command line utility, in many cases the responses that we get from the APIs will be in the form of JSON. Now JSON displayed within your command line is kind of hard to read and inspect, which is why we'll use another tool in order to see the JSON in a nicely formatted manner. And this tool is jq. Head over to this github.io URL for jq. jq is a versatile and powerful command line tool that serves as both a JSON processor and a query language.
+
+[Video description begins] A web page titled ./jq opens with the following URL: jqlang.github.io/jq/. It contains the following description: jq is a lightweight and flexible command-line JSON processor. Below, it contains two options: "Download jq 1.7" and "Try online at jqplay.org!". The toolbar at the top displays the following buttons: Tutorial, Download, Manual, GitHub, and so on. [Video description ends]
+
+It's commonly used in Unix-like operating systems to parse, filter, transform, and manipulate JSON data. jq is available on all major operating systems so whether you are on Linux, Windows, or macOS, you should be able to install and use jq.
+
+Click on the Download button and I'll show you all the OSs that jq supports.
+
+[Video description begins] A page titled Download jq opens. It displays various details under the following headers: Linux, macOS, FreeBSD, Solaris, Windows, and so on. [Video description ends]
+
+You can see there is support for Linux and there are different ways you can install jq for Linux. You can see there is support for macOS and you can use Homebrew to install jq with macOS. That's what we will choose in just a bit and you can see here that jq can be installed on Windows as well using winget or Chocolatey or by directly installing the jq executable. I'll first switch over to my Mac machine and show you how you can get set up with jq on a Mac. jq does not come preinstalled for these different operating systems so you will have to install and setup jq whether you are on Mac or on Windows.
+
+[Video description begins] She enters the following command: brew install jq. [Video description ends]
+
+On a Mac, simply run brew install jq, and that's it. jq has been downloaded and installed on your machine and if you run jq --version, you can see that we have the latest version available at the time of this recording 1.7.
+
+Installing jq was super easy on a Mac, it's as easy on Windows. There are a few more steps just to set up your path variable because we will be directly downloading the jq executable and configuring the path variable ourselves. Here I am on my Windows machine. I'm going to select this option to Download jq 1.7
+
+[Video description begins] The ./jq page reappears. As she clicks on the "Download jq 1.7" option, a drop-down menu opens. It displays the following options: Linux (AMD64), Linux (ARM64), macOS (AMD64), and Windows (AMD64). [Video description ends]
+
+and I'm going to pick Windows (AMD64) as an option because that's the kind of Windows machine that I have. Once you select this option, you will see an Explorer window pop-up to download the jq executable onto your local machine.
+
+[Video description begins] As she clicks on the Download folder button present on the above toolbar, a drop-down menu appears. It lists the following file: jq-windows-amd64.exe. [Video description ends]
+
+It's now available within my Downloads folder. If I open up my Downloads folder, you can see jq-windows-amd64 has been successfully downloaded. This is an executable and all you need to do is to point your path environment
+
+[Video description begins] The Downloads folder opens. The left pane contains a list of the following options: Desktop, Downloads, Documents, Pictures, and so on. The Downloads option is active. The main pane displays various files and folders under the following column headers: Name, Date Modified, Type, and Size. [Video description ends] variable to where this executable lives.
+
+What I'm going to do now is Copy this executable over and place it in a new folder that I have created within my C: drive. This folder is called jq and here is where I'm going to Paste the executable that I copied over from the Downloads folder. The reason I do this is that I want a location that I remember where my jq executable lives.
+
+[Video description begins] The jq folder is open and it displays the following path in its address bar: This PC > Local Disk (C:)> jq. The left pane contains a list of the following options: Desktop, Downloads, Documents, Pictures, and so on. Below, it displays two more options: This PC and Network. [Video description ends]
+
+I'm now going to Rename this executable to be called jq because that's how I am going to reference it from the Command Prompt. So, now that I have the jq executable within my jq subfolder in my C: drive, let's Copy this path over and let's configure our path environment variable to point to this path so that when we run jq from the command line, it knows where to find the jq executable. In order to bring up the system settings where you can configure your environment variables, you can select and right-click This PC,
+
+[Video description begins] A drop-down menu appears with the following options: Expand, Open in new tab, Open in new window, and Properties. [Video description ends]
+
+select the Properties option, and this will bring up the System dialog.
+
+You will be taken to the System > About page
+
+[Video description begins] A window named Settings opens. At the top it displays a heading named System > About. Below, it contains various details under two sections: Device specifications and Windows specifications. It also contains 4 tabs namely, Related links, Domain or workgroup, System protection, and Advanced system settings. [Video description ends]
+
+where you should find a link for Advanced system settings. Click on that link and this will bring up a dialog
+
+[Video description begins] A dialog box opens named System Properties. It displays the following tabs: Computer Name, Hardware, Advanced, System Protection, and Remote. The Advanced tab is active. It contains 3 sections: Performance, User Profiles, and Startup and Recovery. At the bottom, it has a button named Environment Variables. [Video description ends]
+
+where you will find a button where you can configure your Environment Variables. Click on this button and this will bring up yet another dialog. Observe that we have the Path environment variable selected.
+
+[Video description begins] A dialog box opens named Environment Variables. It contains two sections: User variables for loonycorn and System variables. Each section contains 3 buttons. Their names are: New, Edit, and Delete. The System variables section displays a list of items under two column headers: Variable and Value. The following item is highlighted: Path. [Video description ends]
+
+This is what we need to configure to add the location of our jq executable. With Path selected, click on the Edit button and this will pop up yet another dialog, and here is where we can configure a New value to be appended at the end of the path environment variable.
+
+[Video description begins] A dialog box named Edit environment variable opens. It contains a list box that displays various items. It also has the following buttons: New, Edit, Browse, Delete, and Move Up. [Video description ends]
+
+Paste the path that we had copied over where our jq executable lives, C:\jq, and click on OK. Once you have done this, you have successfully configured your path environment variable to point to the location of jq. Click on OK across all of the dialogs and now you will be able to bring up a Command Prompt and run jq --version and jq will be recognized. You can see that we are dealing with
+
+[Video description begins] A Command Prompt window opens with the following prompt: C:\Users\loonycorn>. She enters the following command: jq --version. [Video description ends]
+
+the latest version of jq at the time of this recording, jq version 1.7. You are now set up with all of the tools that you need to make HTTP requests from your local machine.
+
+8. Video: Making GET Requests Using cURL (it_stapitdj_02_enus_08)
+
+In this video, find out how to make GET requests using cURL.
+make GET requests using cURL
+[Video description begins] Topic title: Making GET Requests Using cURL. Presented by: Janani Ravi. [Video description ends]
+In this demo, that will span several videos, we will see how we can use the curl command line utility in order to make HTTP requests and we will make all kinds of requests GET, PUT, POST, DELETE, and PATCH. Here I am in the terminal window of my machine and here within my home directory, I'm going to create a new subfolder that will serve as my current working directory. I run the mkdir command to create a subfolder called requests
+
+[Video description begins] A terminal window appears and she enters the command that reads: mkdir requests. [Video description ends]
+
+and I'm then going to cd into the requests folder. We'll use this as our current working directory throughout this learning path.
+
+[Video description begins] She enters the command that reads: cd requests. [Video description ends]
+
+The first kind of request that we will make using curl will be GET request and we will make GET request to retrieve resources that we saw in the jsonplaceholder.typicode.com site. We are familiar with the site and its resources.
+
+[Video description begins] A page titled: JSONPlaceholder appears. At the top right, it contains various buttons: Guide, Sponsor this project, Blog, and My JSON Server. Below, it displays the heading: {JSON} Placeholder. Underneath, it reads: Free fake API for testing and prototyping. [Video description ends]
+
+Let's take a quick look at some of the APIs that this site exposes.
+
+Here at the bottom, we have the Resources. These are the URLs of the APIs that we can hit to retrieve data.
+
+[Video description begins] She scrolls down the page and highlights the section labeled: Resources. Underneath, it reads: JSONPlaceholder comes with a set of 6 common resources. Below, it displays 6 resources: /posts, /comments, /albums, /photos, /todos, and /users. [Video description ends]
+
+Now the first URL that I'm going to hit using curl is the /posts URL. When you use the curl command line utility in order to make a request to an API, by default, kind of request that you make is a GET request to retrieve data.
+
+[Video description begins] She moves back to the terminal window and enters the command: curl https://jsonplaceholder.typicode.com/posts. [Video description ends]
+
+So, here all I need to specify is curl and the URL of the API that I want to hit and this will make a GET request and retrieve the list of 100 posts that this API returns. Observe once again, that the response is in the JSON format. So, you should know that when you call the curl command and specify an API, by default, it is the GET request that is made to that API. If you want to be explicit about the kind of request that you are making to the URI, well, you can use the -X flag. Here I have specified curl -X and used the verb GET to indicate that it's a GET request that I am making.
+
+And then after that, I specify the API URL, jsonplaceholder.typicode.com/posts and this does exactly the same thing
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts. [Video description ends]
+
+as the previous command, makes a GET request to this API, and retrieves a list of JSON posts. Now we've discussed earlier that the way to retrieve one particular post is to specify the identifier of the post, so we specify the /posts/1 path. Notice the -X flag, once again the HTTP verb is GET. This will make a GET request to retrieve one particular post with ID 1,
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/1. [Video description ends]
+
+and that's what you see here in the response on the terminal. Now if you want to retrieve the information for a different post, we'll simply change the URL that we hit using curl. curl -X GET, notice the URL here points to /posts/3.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/3. [Video description ends]
+
+So, the post with ID 3 is what is retrieved from the API. Now if you look at the format of the JSON response that we received here on the terminal, you can see that it's not very readable.
+
+It's indented but there is no color-coding and essentially it's kind of hard to parse and understand. And this is exactly why we installed the jq tool along with curl. Now what we are going to do is take the JSON response that was returned from our API and parse that through jq using the pipe operator.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/3 | jq. [Video description ends]
+
+I make the same curl request as before curl -X GET and then I have the URL retrieving the post with ID 3 and whatever JSON response it returns, I'm going to parse that into the jq command line utility using the pipe operator. The pipe operator is the single vertical line that you see here on screen. Now when you hit Enter, the response will be displayed in a nice pretty printed format. It's the same JSON response as before. Nothing has changed with the way we actually hit the API and retrieve the data. What has changed is how we display the data, by passing it through jq. And here you can see all of the fields in the JSON are blue in color and all of the values corresponding to the fields have different colors based on their data types.
+
+Integer values are in a grayish color, string values are in the green color. Once you are using curl for scripting request to APIs on the command line, you can use other concatenations that the terminal window or the command line permits. For example, here I make two curl requests, one after the other using the double ampersand operator. The first curl request is to retrieve the posts with identifier 1. The second curl request is to retrieve the posts with identifier 3.
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X GET https://jsonplaceholder.typicode.com/posts/1 \. Line 2 reads: && curl -X GET https://jsonplaceholder.typicode.com/posts/3. [Video description ends]
+
+Now these requests will be made one after the other and you can see the posts have been retrieved and are displayed here on this terminal. Let's make a few GET requests to some other APIs. Here is the API to retrieve todos from the JSON placeholder server.
+
+The base URL remains the same, https://jsonplaceholder.typicode.com, it's only the path that's different. The path says /todos.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/todos. [Video description ends]
+
+And once you hit Enter, this will make a GET request to this API and retrieve a list of todos from the server. Now jq is not just a command line utility for parsing and displaying JSON in a nice form. It can also be used as a querying tool for JSON data. For example, the jq query max_by, and then you specify the JSON field will allow you to retrieve the JSON entity in the JSON response that is returned that has the maximum value in that field. max_by(.id) will essentially retrieve that JSON entity from the response that has the highest or maximum value in the ID field. Now notice I have another pipe operator after that, the vertical line, and I have said .id.
+
+This is further chaining of the command line. After extracting the JSON entity which has the maximum value of ID, I only want to display this value of the ID. I do not want to display the entire JSON entity. That is what the .id at the end indicates.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/todos | jq 'max_by(.id) | .id'. [Video description ends]
+
+Let's execute this and you can see in the response, we only get 200. This server hosts 200 todos. We extracted the entity with the maximum value of ID and that happened to be 200 and that's the only thing that we get here after parsing the JSON. Just a note that there was no change to what the API actually returned. It's the jq query parsing that we used to extract the maximum value of ID. Let's try this once again. This time we will use the min_by query. Once again, I access the todos API.
+
+I parse the response into the jq JSON parser min_by(.id) will retrieve the JSON entity with the minimum value of ID, that ought to be 1, and then another pipe operator, another vertical line, and then I only want to display the identifier .id,
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/todos | jq 'min_by(.id) | .id'. [Video description ends]
+
+and here you will get the response 1. Different APIs will behave differently as far as error handling goes. The jsonplaceholder API does not return any errors. For example, if you were to try and access the todo with identifier 203, this does not exist, so you simply get an empty JSON response.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/todos/203. [Video description ends]
+
+But for APIs that you write, you might want to return some kind of error in this situation. Let's see a few more examples of GET request before we move on to other kinds of requests made using curl. Here is a GET request to get all of the comments associated with the post 12.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/12/comments | jq. [Video description ends]
+
+The structure of the request does not change, only the API that we hit changes, and I'm going to parse the resulting JSON using jq, and this is what the resulting display looks like, nicely formatted, thanks to jq. So far, we've seen how we can hit different parts in our API. How do you specify query parameters as a part of your URL? Well, we simply specify the query parameters exactly like you would in the browser. An important detail to note here is that your URL along with the query parameters has to be specified within quotes. You can use the single quotes or double quotes. I have used the double quotes here. The URL here will not accept query parameters unless you specify the entire URL including the query parameter string in quotes.
+
+Another thing to note, if you are in a Windows machine, you may have to use double quotes. Single quotes do not work as far as I remember. The base URL is https://jsonplaceholder.typicode.com. The path is /comments and then we have the question mark separating the URL path from the query string or the query parameters. And then we have a single param here postId=14.
+
+[Video description begins] She enters the command that reads: curl -X GET "https://jsonplaceholder.typicode.com/comments?postId=14" | jq. [Video description ends]
+
+This will give us the comments for post with identifier 14. And you can see the response here all nicely formatted for display, thanks to jq.
+
+9. Video: Specifying Headers with cURL Requests (it_stapitdj_02_enus_09)
+
+In this video, you will learn how to specify headers in cURL requests.
+specify headers in cURL requests
+[Video description begins] Topic title: Specifying Headers with cURL Requests. Presented by: Janani Ravi. [Video description ends]
+In this demo, we'll see how you can specify request headers using the curl command. As we've discussed earlier, headers in an HTTP request or response is used to provide additional metadata about the request or response, respectively. I want to show you something interesting about the Swagger UI. So, let's head over to httpbin.org where all of the APIs are displayed using the Swagger UI. The Swagger UI allows us to see a lot of useful details about our API.
+
+[Video description begins] A web page appears that displays the heading: httpbin.org. Below, it displays various sections: HTTP Methods, Auth, Status codes, Request inspection, Response formats, and so on. [Video description ends]
+
+We can see the documentation. We've seen that we can also make requests to the API using the Swagger UI. Here is another interesting detail. I'm going to expand the HTTP Methods section and expand this Get URL.
+
+[Video description begins] She expanded the HTTP Methods section. Under this, it contains various options: /delete, /get, /patch, /post, and /put. [Video description ends]
+
+[Video description begins] She further expands the /get option. Under this, it displays 2 sections: Parameters and Responses. The Parameters section displays a Try it out button on the right. [Video description ends]
+
+Now when you click on Try it out and then click on Execute, you'll see that whenever a request is made from the Swagger UI, the Swagger UI actually gives you the curl command that will make the equivalent request from your terminal. The GET request that we just made to the URL httpbin.org/get,
+
+[Video description begins] Now the Parameters section displays the Cancel button on the right. Below, it displays 2 buttons: Execute and Clear. The Responses section displays 2 fields: Curl and Request URL. [Video description ends]
+
+the corresponding curl command to make that GET request is available right here on your screen. And now that we know how to use curl on our machine, we can simply copy this URL over, go back to our terminal window, paste this URL, and make the corresponding curl request. The one change I've made is I've used the pipe operator and I'm going to parse the response using jq. Notice how the API URL is enclosed within double quotes. That's a pretty standard way to make URL request. In addition, we use the -H flag to specify a request header.
+
+This request header accept: application/json indicates to the server that we are expecting a JSON in the response and we'll, of course, parse the JSON using jq.
+
+[Video description begins] The terminal window appears and she pastes the copied command that reads: curl -X GET "https://httpbin.org/get" -H "accept: application/json" | jq. [Video description ends]
+
+Go ahead and hit Enter and here is the JSON response from the API. What headers are accepted and parsed by the API server, of course, depends on the developer of that API server. For example, let's say, I say I accept only application/xml, so that's what I have specified as of my request header to this httpbin.org/get API.
+
+[Video description begins] She enters the command that reads: curl -X GET "https://httpbin.org/get" -H "accept: application/xml" | jq. [Video description ends]
+
+Notice that the response is still in JSON. That's because the API server didn't actually look at this header at all and always just returns a JSON response. So, that header is essentially useless in this particular case. But within your organization, for APIs that are developed, it's good practice to ensure that headers that you specify as a part of your request are actually looked at and the response is tweaked based on that header.
+
+It's the decision of the API developer to determine what headers need to be configured for any request made to that API. HTTP headers are metadata associated with an HTTP request or response, so there are response headers in addition to request headers. You already are aware of this. Headers provide important information about the message that you're sending, its content, and how the message should be handled by the recipient. Headers are always defined in the form of key-value pairs. Now, let's head over to httpbin.org and let's take a look at some other sample requests that we can make to understand APIs better. If you scroll down to the middle of the page, you'll find a section called Request inspection which offers a number of APIs that allows you to inspect the request that you actually made to that API.
+
+[Video description begins] She now moves to the httpbin.org page and expands the Request inspection section. Under this, it contains 3 options: /headers, /ip, and /user-agent. [Video description ends]
+
+The API at the /headers path will basically respond with whatever headers that you would parse along as a part of the request. Let's go ahead and see the curl command that we can use to try this out. Notice the curl command that we can use to make this GET request. I'm going to copy this curl command over, and let's make this request from the terminal window. And I'll use jq to parse the response.
+
+[Video description begins] The terminal window appears and she pastes the copied command that reads: curl -X GET "https://httpbin.org/headers" -H "accept: application/json" | jq. [Video description ends]
+
+The URL of the API is different. Notice the /headers path, the request header that I've sent in is accept: application/json. And notice in the response, my request header is simply mirrored back at me. In addition, there are a few more response headers. Host tells us the hostname of the server, httpbin.org. The User-Agent indicates what kind of client we have used to make the request. The User-Agent is curl.
+
+The X-Amzn-Trace-Id header is a custom HTTP header used for distributed tracing in AWS, Amazon Web Service environments. So, it seems like httpbin.org is hosted on Amazon Web Services. Let's make another request and I'll show you how you can specify multiple headers. These headers won't be parsed or acted upon in any way by the API server, but I'll show you how you can parse multiple headers using the curl utility. You use multiple -H flags. The first -H specifies the first header accept: application/json. The next header specifies the language that we accept en-US. The From header is used to specify additional metadata on who is sending the request. I've just said cloud.user@loonycorn.com is the one sending the request.
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X GET "https://httpbin.org/headers" \. Line 2 reads: -H "accept: application/json" \. Line 3 reads: -H "Accept-Language: en-US; q=0.9" \. Line 4 reads: -H "From: cloud.user@loonycorn.com" \. Line 5 reads: | jq. [Video description ends]
+
+And if we look at the response, all of the headers that we sent in the request is reflected back at us.
+
+That's what this API does. The Accept, Accept-Language, and From headers are present in the response along with Host, User-Agent, and X-Amzn-Trace-Id. Back to the httpbin swagger UI, let's look at some other APIs that are available here. Let's look at ones with different Response formats.
+
+[Video description begins] She now moves back to the httpbin.org page and expands the Response formats section. Under this, it contains various options: /brotli, /deflate, /deny, /html, /xml, and so on. [Video description ends]
+
+Here you'll see when we seek responses in different formats, we actually specify that as a part of the request header. For example, let's try out this request where we are expecting the response to be in the XML format. I'm going to execute this request. This will give us the curl command that we can then execute using our terminal window. So, copy this curl command over and let's make the request to this API.
+
+[Video description begins] The terminal window appears and she pastes the copied command that reads: curl -X GET "https://httpbin.org/xml" -H "accept: application/xml". [Video description ends]
+
+We indicate using the header that we are expecting the response to be in the XML format, and this particular API does indeed return the response in an XML format.
+
+10. Video: Making POST Requests Using cURL (it_stapitdj_02_enus_10)
+
+During this video, discover how to make POST requests using cURL.
+make POST requests using cURL
+[Video description begins] Topic title: Making POST Requests Using cURL. Presented by: Janani Ravi. [Video description ends]
+In this demo, we'll see how we can use the curl utility to make different kinds of requests to APIs POST, PUT, PATCH, and DELETE requests. Now we'll work with the APIs that are available here on jsonplaceholder.typicode.com. As you remember, this is a Free fake API that is available to us for testing.
+
+[Video description begins] A page titled: JSONPlaceholder appears. At the top right, it contains various buttons: Guide, Sponsor this project, Blog, and My JSON Server. Below, it displays the heading: {JSON} Placeholder. Underneath, it reads: Free fake API for testing and prototyping. [Video description ends]
+
+We've already explored a variety of GET requests that we can make to this API. Now if you'll look under Routes, you can see some of the other requests that you can make, POST, PUT, PATCH, and DELETE requests for blog posts.
+
+[Video description begins] She scrolls down the page and highlights a section labeled: Routes. Underneath, it reads: All HTTP methods are supported. You can use http or https for your requests. Below, it displays various requests: GET, POST, PUT, PATCH, and DELETE. Further down, it reads: Note: see guide for usage examples. [Video description ends]
+
+All of these other requests are usually used to update resources on the server. For example, POST is used to add new resources, PUT to update resources, PATCH to update resources, and DELETE to delete resources.
+
+Now, because this is a fake API, the POST, PUT, PATCH, and DELETE will give you a response as though the operation has happened, but there'll be no actual update, delete, or addition that happens on the server. That's just a heads-up for you to know how this particular fake API server works. If you click on the user guide here, you'll be able to see some examples of how these different APIs can be used for different requests.
+
+[Video description begins] A page appears that displays the heading: Guide. Below, it contains various sections: Getting a resource, Listing all resources, Creating a resource, and so on. [Video description ends]
+
+If you Scroll down to somewhere in the middle of the page, you'll see how you can make a POST request to create a new resource. If you look at the JavaScript here, the fetch API is used to make a POST request to jsonplaceholder.typicode.com/posts.
+
+[Video description begins] She highlights the codes under the heading: Creating a resource. Line 1 reads: fetch('https://jsonplaceholder.typicode.com/posts', {. [Video description ends]
+
+The method is POST and then there is a request body indicating the resource, the new post that you want to add to the server.
+
+[Video description begins] Line 2 reads: method: 'POST',. Line 3 reads: body: JSON.stringify({. Line 4 reads: title: 'foo',. Line 5 reads: body: 'bar',. Line 6 reads: userId: 1,. Line 7 reads: }),. [Video description ends]
+
+A POST request is usually made to add resources to a server.
+
+A POST request is not idempotent, which means that making the same POST request multiple times may result in different outcomes or side effects. So, if you make the same POST request with the same resource information multiple times, the same resource may be added multiple times to your server. Let's first use the curl command to make a POST request to this URL. I'll now switch over to my terminal window and I'll use the curl utility. Notice how I specify the method or the HTTP verb that I want to use for this API, curl -X POST. Next, I specify the URL that I want to hit https://jsonplaceholder.typicode.com/users. I'm making a POST request to add a new user. Next, I specify the header for this request. The header says Content-Type is application/json. I then use the -d flag with this curl request.
+
+This -d flag is what I used to specify the request body, and the request body is in the form of a JSON string. I open up the single quotes and I specify a JSON string which contains the new user's details. This user's name is John Doe, username johndoe, and email address is johndoe@example.com. These are the attributes that a new user entity requires for this particular API. Now, depending on the API that you're creating, what you specify in the body of the request will, of course, be different. The request body depends on whatever entity it is that you're trying to create. The entire request body is within the open single quotes and the close single quotes. And then I parse the response of this POST request using jq so that it's printed out in a nice pretty format.
+
+[Video description begins] A terminal window appears and she enters the following lines of command. Line 1 reads: curl -X POST https://jsonplaceholder.typicode.com/users \. Line 2 reads: -H "Content-Type: application/json" -d '{. Line 3 reads: "name": "John Doe",. Line 4 reads: "username": "johndoe",. Line 5 reads: "email": "johndoe@example.com". Line 6 reads: }' \. Line 7 reads: | jq. [Video description ends]
+
+Let's make this POST request and take a look at the response and you can see that the newly created entity is returned to us in the response. We have the name, username, and email. Those are the attributes that we specified. The fake API server added yet another attribute, the ID for this user 11, and sent the response back to us. Again, please note that new user was actually created on the server. This is a fake API after all. Later on, when we use a real API, any POST request that we make will actually persist data on the server. When you use the curl terminal utility, the order in which you specify the flags and where you specify the URL doesn't really matter. Here is another example of a POST request made using curl. curl -X POST indicating the HTTP method -H that is the flag for the header. The only header is Content-Type: application/json.
+
+Next, I've used the -d flag to specify the request body. The request body is a JSON string containing information for a new post. The three attributes for a post are title, body, and userId. And then finally, at the very end, I have the URL for the API jsonplaceholder.typicode.com/posts and then, of course, I parse the response using jq.
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X POST -H "Content-Type: application/json" -d '{. Line 2 reads: "title": "My New Post",. Line 3 reads: "body": "This is the content of my new post.",. Line 4 reads: "userId": 1. Line 5 reads: }' https://jsonplaceholder.typicode.com/posts | jq. [Video description ends]
+
+This will work perfectly well. The URL is specified after the flags to the curl terminal utility and that's totally fine. Notice that we get a successful response for the creation of our new post. Let me show you another example of a POST request to create a new comment for a particular post curl -X POST. The URL is jsonplaceholder.typicode.com/comments. The header is Content-Type: application/json. The -d flag that is the request body contains the JSON string for a new comment.
+
+A new comment has a postId, name, email, and body.
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X POST https://jsonplaceholder.typicode.com/comments \. Line 2 reads: -H "Content-Type: application/json" -d '{. Line 3 reads: "postId": 1,. Line 4 reads: "name": "John Doe",. Line 5 reads: "email": "johndoe@example.com",. Line 6 reads: "body": "This is a comment on the post.". Line 7 reads: }' \. Line 8 reads: | jq. [Video description ends]
+
+And let's take a look at the response. You can see that our newly created comment has been sent back in the response. Let's make one more POST request and this time to create a new to-do. The URL is different. Notice the /todos. The header is the same Content-Type: application/json, indicating that I am sending the request in the JSON format. The -d flag that contains the request body now contains the JSON string for a new to-do with title, completed, and userId. The POST request was sent successfully to the server
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X POST https://jsonplaceholder.typicode.com/todos \. Line 2 reads: -H "Content-Type: application/json" -d '{. Line 3 reads: "title": "Do Something Useful",. Line 4 reads: "completed": false,. Line 5 reads: "userId": 1. Line 6 reads: }' \. Line 7 reads: | jq. [Video description ends]
+
+and we got the newly created to-do in the response.
+
+Let's look at an example of a POST request that we make to an API on the httpbin.org site.
+
+[Video description begins] A web page appears that displays the heading: httpbin.org. Below, it displays various sections: HTTP Methods, Auth, Status codes, Request inspection, Response formats, and so on. [Video description ends]
+
+Here, under Response inspection, you can see that there are some POST requests that we can make.
+
+[Video description begins] She expanded the Request inspection section. Under this, it contains various options: GET /cache, GET/ cache/{value}, GET /etag/{etag}, GET /response-headers, and POST /response-headers. [Video description ends]
+
+When you hit the /response-headers API on httpbin.org, this will return a set of response headers parsed from the query string that you parse in. Let's try out this API first from within the Swagger UI.
+
+[Video description begins] She further expands the POST /response-headers option. Under this, it displays 2 sections: Parameters and Responses. The Parameters section displays a Cancel button on the right. Below, it displays a freeform field. Further down, it contains an Execute button. [Video description ends]
+
+Here I specify the query string freeform is equal to canbeanything. I've just chosen a string at random, canbeanything. I execute this URL and I get a response and all this response does is it takes the query string that you had specified in your request URL and returns all of the headers along with the query string that you had specified as a part of the response body.
+
+If you look at the Response body, you can see that additional attribute freeform is equal to canbeanything.
+
+[Video description begins] The Responses section displays 4 fields: Curl, Request URL, Response body, and Response headers. [Video description ends]
+
+This is just the behavior of this particular test API. I'm going to copy the curl command to hit this API from our terminal window and let's run the command here. This is an example of a POST request with no request body. It's not necessary that every POST request should contain a request body, though they usually do. Observe that the URL with the query string parameter freeform is equal to canbeanything, is within double quotes. And then I have a single header, accept: application/json.
+
+[Video description begins] She moves back to the terminal window and pastes the copied command. Line 1 reads: curl -X POST "https://httpbin.org/response-headers?freeform=canbeanything" \. Line 2 reads: -H "accept: application/json". [Video description ends]
+
+Let's go ahead and hit this API. And here is the response, the same response that we saw in the Swagger UI.
+
+11. Video: Making PUT, PATCH, and DELETE Requests Using cURL (it_stapitdj_02_enus_11)
+
+Learn how to make PUT, PATCH, and DELETE requests.
+make PUT, PATCH, and DELETE requests
+[Video description begins] Topic title: Making PUT, PATCH, and DELETE Requests Using cURL. Presented by: Janani Ravi. [Video description ends]
+Let's go back to the jsonplaceholder.typicode.com site. And here in the guide, notice there is a section for Updating a resource.
+
+[Video description begins] A web page appears that displays the tab heading: JSONPlaceholder-Guide. The main pane displays a section labeled: Updating a resource. Below, it displays various lines of code. [Video description ends]
+
+Resource updates are performed using PUT request. And here is an example of a PUT request to update a blog post on the jsonplaceholder site.
+
+[Video description begins] A box appears at the bottom that displays the heading: PUT. Below, it reads: PUT requests are idempotent and used for complete updates of resources on the server. [Video description ends]
+
+Unlike POST request, PUT requests are actually idempotent, which means that you can make the same PUT request to your API and there should be no side effects or the end result should be the same. So, if you update the same resource multiple times with the same set of updates, the end result is going to be exactly the same. PUT requests are usually used for complete updates of your resource when you want to update all of the attributes or fields of a resource when you want to replace the entire resource with a new representation.
+
+Before we make our first PUT request, I'm going to make a GET request for a POST with a particular ID. This is the POST with ID 45 and you can see the details of this post here.
+
+[Video description begins] A terminal window appears and she enters the command: curl -X GET https://jsonplaceholder.typicode.com/posts/45 | jq. [Video description ends]
+
+userId is 5, id is 45, and it has some title and body. I'll now use the curl command line utility to make a PUT request to update this particular POST curl -X PUT. This is how I specify the HTTP verb for this request. It's a PUT request to update resources. Here is the header Content-Type: application/json using the -H flag. The -d flag allows me to specify the request body. The request body contains the updated attributes for this particular post. title is New Title, body is New Body, and the userId is 45. And then I have the URL of the API. We have the base URL /posts/45. Making a PUT request to this particular path will update the resource associated with the post ID 45
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X PUT \. Line 2 reads: -H "Content-Type: application/json" \. Line 3 reads: -d '{. Line 4 reads: "title": "New Title",. Line 5 reads: "body": "New Body",. Line 6 reads: "userId": 45. Line 7 reads: }' \. Line 8 reads: https://jsonplaceholder.typicode.com/posts/45 | jq. [Video description ends]
+
+and the response we get indicates that our PUT request was successful.
+
+And here is what the resource entity now looks like. It has a New Title, New Body. userId and id are both 45. The response indicates that the PUT request was successful. But because this is a fake API server, this particular resource was not actually updated on the server. That's how this particular API works.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/45 | jq. [Video description ends]
+
+If you look at the post with ID 45, you can see that it still has the same old details. A PUT request thus is used to make updates to a resource on the server, but the PUT request is used to replace the representation currently on the server with an entirely new representation. If you want to partially update a resource on the server, you should use a PATCH request instead of a PUT request.
+
+If you go back and look at the user guide for the jsonplaceholder fake API, you can see that it supports patching a resource as well
+
+[Video description begins] She moves back to the JSONPlaceholder-Guide webpage. The main pane now displays a section labeled: Patching a resource. Below, it displays various lines of code. [Video description ends]
+
+and you simply call the resource that you want to patch. Here it's posts/1 that is the POST with ID 1, and you use the PATCH method to make partial updates of this resource. Now PATCH requests, just like PUT requests, are idempotent, which means that making the same PATCH request multiple times should have the same effect as making it exactly once. In other words, PATCH requests should not cause unintended side effects or result in different outcomes. PATCH requests are specifically designed
+
+[Video description begins] A box appears at the bottom that displays the heading: PATCH. Below, it reads: PATCH requests are idempotent and are used to make partial updates of resources on the server. [Video description ends]
+
+for making partial updates to a resource on the server. PATCH requests are used when you want to change some fields or some attributes of a resource without affecting the entire resource and without creating an entirely new representation of the resource. Now let's take a look at an example of how you can use a PATCH request to update the attributes of a POST.
+
+We use the curl command line utility with the -X flag. I specify the HTTP verb I want to use for my request. This is a PATCH request for partial updates. I use the -H flag to specify the header Content-Type: application/json, the -d flag to specify the request body in the form of a json string. Observe that I want to update a blog post, but I only want to update the title. In such circumstances, it makes sense to use the PATCH request instead of the PUT request. So I've only specified the new title that I want for my post Updated Title and then I have my API URL /posts/45.
+
+[Video description begins] She moves back to the terminal window and enters the following lines of command. Line 1 reads: curl -X PATCH \. Line 2 reads: -H "Content-Type: application/json" \. Line 3 reads: -d '{. Line 4 reads: "title": "Updated Title". Line 5 reads: }' \. Line 6 reads: https://jsonplaceholder.typicode.com/posts/45 | jq. [Video description ends]
+
+Go ahead and hit Enter and make this PATCH request. The response that we get here is the entire entity that was updated. We only updated the title field, but we get the entire entity in the response. The way PATCH is handled is different on the API server.
+
+The API server will use PATCH for partial updates and use PUT for complete updates to a resource. The response that we get with a PUT or a PATCH may be exactly the same. Let's see how this particular API server handles PUTs and PATCHes differently. If I make a PUT request and only update the title of a particular post, in the response, you can see that the entire post has been replaced to one, which has only the title and an id. The other attributes of a post have simply disappeared.
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X PUT \. Line 2 reads: -H "Content-Type: application/json" \. Line 3 reads: -d '{. Line 4 reads: "title": "Updated Title". Line 5 reads: }' \. Line 6 reads: https://jsonplaceholder.typicode.com/posts/45 | jq. [Video description ends]
+
+That's because the PUT request was used to entirely replace the original post with whatever I had specified in the request body. And here in the request body, I'd only specified the title. And here is the last type of request that we'll perform using the curl utility,
+
+[Video description begins] She again moves back to the JSONPlaceholder-Guide webpage. The main pane displays 2 sections: Deleting a resource and Filtering resources. Both sections displays various lines of code. [Video description ends]
+
+and that is the DELETE request which is used to delete a resource on the server.
+
+You use the URL to identify the resource that you want to delete and you simply use the DELETE method to make the HTTP request. Again, because this is a fake API server, the resource will actually not be deleted on the server. Let's use the DELETE request to delete a to-do.
+
+[Video description begins] A terminal window appears and she enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/todos/105 | jq. [Video description ends]
+
+I'll first make a GET request for the to-do with id 105 and this is what the to-do looks like. Let's now delete this to-do by making a DELETE request. By now you're very familiar with how curl works. I use the -X flag with the delete verb to make a DELETE request and here is the URL for my API /todos/105 and I get an empty successful response
+
+[Video description begins] She enters the command that reads: curl -X DELETE https://jsonplaceholder.typicode.com/todos/105 | jq. [Video description ends]
+
+indicating that the resource has been deleted. But you know that the resource has not actually been deleted because this is a fake server. If you try to access the to-do at id 105, you'll still get a response. Let's try another DELETE operation before we call it a day on this particular video. curl -X DELETE, I want to delete the comment with ID 25. So, /comments/25 is in my API URL path.
+
+[Video description begins] She enters the command that reads: curl -X DELETE https://jsonplaceholder.typicode.com/comments/25 | jq. [Video description ends]
+
+The empty response indicates a successful DELETE operation. But you know this is a fake server, so if you actually try to access the comment at ID 25 once again, you'll get an actual response. The comment has not actually been deleted on this fake API server.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/comments/25 | jq. [Video description ends]
+
+12. Video: Viewing cURL Configuration Options (it_stapitdj_02_enus_12)
+
+In this video, discover how to view cURL config options.
+view cURL config options
+[Video description begins] Topic title: Viewing cURL Configuration Options. Presented by: Janani Ravi. [Video description ends]
+In this video, we'll explore the curl command line utility just a little bit more. We'll see how you can specify the request body that contains your JSON data in a file and then point to that file when you make a curl request, a POST request that requires a request body. We'll also see how you can write out the response that you get from an API out to a file using curl. Here I am in my current working directory called request and within this, I'm going to create a subfolder called api_data.
+
+[Video description begins] A terminal window appears and she enters the command: mkdir api_data. [Video description ends]
+
+So, I use mkdir api_data, create a subfolder, I'm now going to cd into this subfolder and set up a JSON file that contains the JSON contents of my request body. So, run the nano command or if you're on Windows, you can use Notepad
+
+[Video description begins] She enters the command: cd api_data. [Video description ends]
+
+to create a new file called request.json.
+
+[Video description begins] She enters the command: nano request.json. [Video description ends]
+
+nano request.json will create a new file and open it up in the nano editor for me to edit. If you're on Windows, you can use any text editor to edit this file.
+
+[Video description begins] A nano editor opens up that displays the heading: File: request.json. Below, she enters the following lines of command. Line 1 reads: {. Line 2 reads: "title": "Updated Title from File",. Line 3 reads: "body": "Updated Body from File",. Line 4 reads: "userId": 3. Line 5 reads: }. [Video description ends]
+
+Now, here is the JSON contents that I want to pass in using my request body. This is JSON data representing a blog post. It has a title, body, and a userId of 3. Now, hit Ctrl+X to save the contents of this file if you're using nano. This request.json file with my JSON entity is now present in my current working directory. Let's now make a POST request using curl. curl -X POST, the header for this request is simply Content-Type: application/json. Notice that I used the --data flag instead of using the -d flag where I specify the request body in the form of a JSON string. I use the --data flag to point to a file that contains my request body and the file is request.json.
+
+@request.json will point to this JSON file in my current working directory and the JSON contents in that file will make up my request body. And then there is the URL of my API which is simply jsonplaceholder.typicode.com/posts.
+
+[Video description begins] A terminal window appears and she enters the following lines of command. Line 1 reads: curl -X POST -H "Content-Type: application/json" \. Line 2 reads: --data @request.json https://jsonplaceholder.typicode.com/posts | jq. [Video description ends]
+
+Go ahead and hit Enter and let's make this POST request by reading data from a file and you can see the successful response here. title is Updated Title from File, body is Updated Body from File, and userId is 3. This is the contents of the request.json file that we just wrote out which was used to make this POST request. Let's make a simple GET request to retrieve the contents of a particular post. Here the post is the one with ID 77.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/77. [Video description ends]
+
+When we make a simple GET request using curl in this manner, the response is simply printed out to the terminal.
+
+Now if you want to write this response that you get from this API out to a file, well, you could use the output redirection operator. This is the greater than sign that you see here. Output redirection will redirect the output from the terminal into this posts.json file that I have specified. If you run an ls -l here in this working directory,
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/77 > posts.json. [Video description ends]
+
+you'll find that a new posts.json file has been created and this contains the response that was returned from the server
+
+[Video description begins] She enters the command: ls -l. [Video description ends]
+
+for our GET request. So, cat posts.json will show us the response from the server. This output redirection operator works only in Linux
+
+[Video description begins] She enters the command: cat posts.json. [Video description ends]
+
+and other Linux-like systems like macOS. A better option is for you to use curl itself to write out the response from the API to a file and you can do this using the --output flag with the curl command line utility.
+
+Here I make a GET request to jsonplaceholder.typicode.com/posts and the post with ID 22 and I've specified --output posts.json.
+
+[Video description begins] She enters the command that reads: curl -X GET https://jsonplaceholder.typicode.com/posts/22 --output posts.json. [Video description ends]
+
+Now, this will write out whatever response I get from this API out to this posts.json file. The previous content of posts.json will be completely overwritten with the new contents. Let's take a look at posts.json and you can see that this contains the post with id 22. Now that we know how to read data from a file to make up our request body and how to write the response from an API out to a file, let's work with APIs that return different kinds of responses. APIs that return image responses, for example. And for this, we'll head over to httpbin.org.
+
+[Video description begins] A web page appears that displays the heading: httpbin.org. Below, it displays various sections: HTTP Methods, Auth, Status codes, Request inspection, Images, and so on. [Video description ends]
+
+Here in httpbin, there is a section called Images which returns images in different formats. Expand the section and you'll see a number of different APIs here that return images in different formats, JPEG, PNG, SVG, and WebP.
+
+[Video description begins] She expands the Images section. Under this, it contains various options: GET /image, GET /image/jpeg, GET /image/png, GET /image/svg, and GET /image/webp. [Video description ends]
+
+I'll now use the curl command to try out this URL that returns an image in the JPEG format. Expand this section and click on the Try it out button in order to hit this API to request an image in the JPEG format.
+
+[Video description begins] She further expands the GET /image/jpeg option. Under this, it displays 2 sections: Parameters and Responses. The Parameters section displays a Try it out button on the right. [Video description ends]
+
+Click on Execute, there are no parameters to specify and here you can see the curl command that will actually perform the same request. And here in the Response, you can see the image in the JPEG format. Let's copy over the curl command that's here
+
+[Video description begins] Now the Parameters section displays the Cancel button on the right. Below, it displays 2 buttons: Execute and Clear. The Responses section displays 4 fields: Curl, Request URL, Response body, and Response headers. [Video description ends]
+
+and let's run this from our terminal window. This is a simple GET request. The URL for our API is httpbin.org/image/jpeg and we specify in the header that we are looking for an image/jpeg response that is the mime type of the response.
+
+Now JPEG images are just binary files
+
+[Video description begins] She moves back to the terminal window and pastes the copied command that reads: curl -X GET "https://httpbin.org/image/jpeg" -H "accept: image/jpeg". [Video description ends]
+
+and here you can see a little warning in my terminal window. Binary output can mess up your terminal. Basically, it's not a good practice to print out binary output within your terminal. And in any case, when you just look at the binary output, it won't make any sense to you. You won't know whether it's an image or something else. Notice that curl recommends that you use the --output flag to write this binary output to a file which you can then view. Let's take its recommendation. I'm going to make the same curl request once again, but notice I have this additional flag --output image.jpeg.
+
+[Video description begins] She enters the following lines of command. Line 1 reads: curl -X GET "https://httpbin.org/image/jpeg"\. Line 2 reads: -H "accept: image/jpeg" \. Line 3 reads: --output image.jpeg. [Video description ends]
+
+So, the binary output will be written out to this image.jpeg file. I know the binary represents a JPEG image.
+
+So, now when I run an ls -l here after executing that curl request, you can see I have an additional image.jpeg file that has been created and I'm actually going to be able to view this within my API data folder. Double-click on image.jpeg and you can see the same image that we saw within the browser window opens up on our machine. There are a number of other flags that curl supports. For example, the -I flag, also known as the --head flag, is used to send an HTTP head request to a specific URL and retrieve only the HTTP headers of the response without downloading the actual body content of the resource. So, when you say curl -I and the URL to which you want to make a GET request, this will retrieve only the headers in the response. The actual body of the response will not be sent back,
+
+[Video description begins] She enters the command that reads: curl -I https://jsonplaceholder.typicode.com/posts/1. [Video description ends]
+
+and you can see that here.
+
+What you see here are all of the response headers included as a part of the response that this API sends back when you make a GET request to it. Let's say you're debugging a particular API and you make a request to it using the curl command line utility. You can use the -v flag, also known as the verbose flag, to enable verbose mode. Using the verbose mode will provide detailed information about the HTTP request that you've made to an API and the corresponding response, including headers and other diagnostic data. When you make this request,
+
+[Video description begins] She enters the command that reads: curl -v https://jsonplaceholder.typicode.com/posts/1. [Video description ends]
+
+you can see that a whole bunch of information is output to screen. You get information about the request headers as well as the response headers in addition to the body of the response.
+
+13. Video: Authenticating to Use GitHub APIs (it_stapitdj_02_enus_13)
+
+Find out how to authenticate yourself to GitHub APIs.
+authenticate yourself to GitHub APIs
+[Video description begins] Topic title: Authenticating to Use GitHub APIs. Presented by: Janani Ravi. [Video description ends]
+So far, all of the API requests that we've been making using curl, using the browser have been to APIs that are running on fake servers, so any updates that you make aren't really reflected on the server. While this is great for learning the basics of APIs, this is kind of unsatisfying overall. And that's why in this demo, we'll see how you can use curl requests to make requests against a real API. And the API that we've picked for this are the APIs exposed by GitHub remote hosting services. If you've done any kind of software development, it's quite likely that you've used and worked with GitHub. GitHub is a web-based platform for version control and collaborative software development.
+
+GitHub provides tools and features to make it easier for individuals and teams to work together on software projects, track changes, and collaborate with others. Now you can interact with GitHub using its user interface. You can also use the Git utility that you install on your local machine. But here in this demo, we'll see how you can perform some basic operations on GitHub, like create a repository, update a repository, and delete a repository, all using API requests. We won't use the GitHub user interface at all, except to sign in and get a token authorizing us to be able to access GitHub via APIs.
+
+[Video description begins] A webpage appears titled: GitHub: Let's build from here. It contains a few tabs: Product, Solutions, Open Source, and Pricing. Besides, it contains a Search bar, a Sign in button, and a Sign up button. [Video description ends]
+
+Now, in order to perform this demo, you'll need to create a GitHub account, and you can do that for absolutely free by clicking on the Sign up button that you see here on the top right and following the simple steps that involves creating an account. You'll, of course, need an email ID in order to create an account.
+
+Creating an account is straightforward so I won't really show you how that's done here. I've already created an account behind the scenes and I'm going to use that account to sign in to GitHub. So, once you've created an account, you can come back here and click on the Sign in button. I sign in here with my e-mail address and GitHub password. Click on the Sign in button and this takes me straight to my GitHub dashboard.
+
+[Video description begins] A webpage titled 'GitHub' opens. The main pane displays: Dashboard. Besides, it contains a search bar, a profile button, a settings icon, and so on. The left pane displays: Top Repositories. The main pane shows the heading: Home. [Video description ends]
+
+On the left, you can see my top repositories, repositories that I interact with the most often. A GitHub repository, often abbreviated to repo, is a central location where you can store, manage, and organize your software projects, source code, and other related files. You can see the repositories that I've created here for the different projects that I was working on.
+
+The left shows you only the top repositories that you've used within your GitHub account. If you click on this little profile icon and head over to Your repositories,
+
+[Video description begins] A drop-down menu appears under the profile button. It contains various options: Set status, Your profile, Your repositories, Your projects, Your organizations, Settings, and More. [Video description ends]
+
+you'll get a complete list of repositories available in your account.
+
+[Video description begins] A corresponding page opens. It contains the following tabs: Overview, Repositories, Projects, Packages, and Stars. The left pane displays the avatar and the profile name. The main pane displays various repositories. [Video description ends]
+
+If you set up a new account, there, of course, will be no existing repositories and that's totally fine. You're going to create a repository and update a repository using APIs. It doesn't matter if you have existing repositories or not. Now let's head over to the terminal window and let's make a curl request to see what APIs github.com offers for us to work with. I make a simple GET request to this URL api.github.com and this will give me all of the different APIs that GitHub supports for its users.
+
+[Video description begins] A terminal window opens. The following command is entered: curl "https://api.github.com/" |jq. [Video description ends]
+
+You can see the API URL to access the current user.
+
+You can see the API URL to perform code search, commit search, API URL to access emails, and so on. These APIs are very useful if you want to programmatically script your interaction with GitHub. That's when you'll essentially invoke these APIs to perform the different operations that you want. There are millions of users who have accounts on GitHub, and if you want to view the profile of any such user, you can use this URL to access that user's profile. Here loonytest is the username for my current user with which I've logged in. I can make a simple GET request to api.github.com/users/ the username loonytest in order to retrieve publicly available information for this user.
+
+[Video description begins] She enters the command: curl "https://api.github.com/users/loonytest" |jq. [Video description ends]
+
+I haven't used any kind of authorization to access this API so my private repositories and other details will not be present, but whatever is in my public profile will be available and you can do this for any user on GitHub. What you see here in the response is the different URLs that you can use to access different information for this particular user. For example, you can see the repos_url that you can hit in order to retrieve information about the repositories for this particular user. Let's try and make an HTTP GET request to that URL api.github.com/users/loonytest/repos.
+
+[Video description begins] A new command is added: curl "https://api.github.com/users/loonytest/repos" |jq. [Video description ends]
+
+Now, when I hit this URL, I get absolutely nothing in the response. That's because I have no publicly available repositories. The private repositories that belong to any GitHub account will not be accessible unless you provide the right authentication and authorization, and we'll see that in just a bit. Here is the GitHub API URL that you can make a GET request to to get the details on the currently authenticated user curl -X GET api.github.com/user.
+
+[Video description begins] The following command is entered: curl -X GET "https://api.github.com/user" |jq. [Video description ends]
+
+This will give you who the currently authenticated user is and you can see that we are not authenticated. The message here in the response is that you need to authenticate yourself before you can get the details of the currently authenticated user. Now there are different ways you can authenticate yourself while making a request to an API, and there are different authentication techniques that different API servers use. On GitHub, you authenticate yourself using something known as a personal access token. This is a security token that can be used to authenticate your identity and provide you access to various GitHub features and services. Let's set ourselves up with a personal access token for our account, which we can use to authenticate and authorize ourselves when we make our API requests. Click on the little avatar on the top right and then in the dialog that opens up, click on Settings.
+
+This will take you to a page where you can configure all kinds of settings for your GitHub account. We are not really interested in all of this. We're interested in Developer settings that you should see off to the left when you scroll down a little bit. This is where we can set up our personal access token. Click on the link on the left that says Personal access tokens and let's select Tokens(classic). And you can see this little message here,
+
+[Video description begins] A webpage opens titled: Personal Access Tokens (Classic). The left navigation menu contains various options: GitHub Apps, OAuth Apps, Personal access tokens, Fine-grained tokens, and Tokens (classic). The main pane displays the heading: Settings / Developer Settings. Below, it contains a button with a drop-down option named: Generate new token. [Video description ends]
+
+Need an API token for scripts or testing? Generate a personal access token for quick access to the GitHub API. Well, this is exactly what we need. I click on the Generate new token button and generate a new classic token for general use. It's good practice to always specify a note indicating why exactly you're creating this token.
+
+github_api_curl is what I've specified here. My token will expire in 30 days.
+
+[Video description begins] A corresponding page opens with the header: New personal access token (classic). It contains a field option: Note. Below, it contains a drop-down option: Expiration. Further, it displays: Select scopes. It contains various options with a check box option. [Video description ends]
+
+Generally, when you create a token, you should select specific scopes for which you want the token to be used. I'm going to just go ahead and select everything that's here on this page so we don't have to worry about the individual scopes. We are interested in using the APIs after all. After having selected everything, I'm going to click on Generate token here at the bottom. This will generate and display a token that you can now use. Make sure you copy this token over and keep it in a safe place because it won't be displayed to you after this first time. So, I've copied the token over and I'm now going to use this token to authorize myself when I make API request to GitHub.
+
+You can now use this token to authenticate yourself to the GitHub APIs in different ways. One technique is to use the -u flag available on curl. -u flag is used to specify a username and password for HTTP authentication. The value for the -u flag is specified in the form of username: password. And here you can see I have loonytest: and the personal access token that I'm using as a password. And I make a GET request to api.github.com/user.
+
+[Video description begins] The following commands are added. Line 1 reads: curl -u loonytest : ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e \. Line 2 reads: "https://api.github.com/user" |jq. [Video description ends]
+
+The same URL as before, but this time, I'm authenticated, and this API gives me back the details of the currently authenticated user and that user happens to be loonytest. That is the GitHub account for which I generated the personal access token. Another way you can authenticate and authorize yourself to GitHub APIs is to use an Authorization header.
+
+Notice I have the curl -H flag and within that flag, I have Authorization as a header, and the value for Authorization is token and the personal access token that I've generated. This is how clients can transmit an authorization token to the server to prove their identity or authorization level to access a protected resource. I make a GET request to /user to get the currently authenticated user.
+
+[Video description begins] The following commands are added. Line 1 reads: curl -H "Authorization: token ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e"\. Line 2 reads: "https://api.github.com/user" |jq. [Video description ends]
+
+And you can see that the user is loonytest. This is my authenticated user account, the one within which I created my personal access token.
+
+14. Video: Creating, Updating, and Deleting Repositories Using APIs (it_stapitdj_02_enus_14)
+
+During this video, you will learn how to create and update Git repositories.
+create and update Git repositories
+[Video description begins] Topic title: Creating, Updating, and Deleting Repositories Using APIs. Presented by: Janani Ravi. [Video description ends]
+Now that we know how to authenticate and authorize ourselves while making URL requests, there is a lot more information that we can access and we can actually make changes to our GitHub account. Let's make the same API request that we did before to the URL api.github.com/user/repos.
+
+[Video description begins] A terminal window opens. The following command is highlighted:"https://api.github.com/user/repos" |jq. [Video description ends]
+
+I've specified the Authorization: token as a header to authenticate and authorize myself to GitHub, and this HTTP request will now give me the details of all of the private repositories for the current logged-in user. You can see that we get a large chunk of JSON here in the response and every entity in this list that's returned corresponds to a repository that I have on my account. And all of my repositories are private repositories which are now accessible to me because I've authenticated myself to the API. It's hard to make sense of this huge chunk of data that is returned.
+
+Let's parse the response that's returned using jq. Here I've made a curl GET request to the same URL. I used the pipe operator that is the vertical line and then jq and I extract the name of the repository from the JSON list that is returned.
+
+[Video description begins] The following commands are added. Line 1 reads: curl -H "Authorization: token ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e"\. Line 2 reads: "https://api.github.com/user/repos" |jq '. []. name'. [Video description ends]
+
+So .[].name will extract the name field from every JSON entity in the list that is returned. And here you can see the name of all of my private repositories. JQ's query parsing is very very powerful. Here is another example. I make a GET request to the same repos URL. I use jq to extract all of the JSON entities from the list, and from each JSON entity, I want to extract the name and the URL for the repo, and I want the parsed response in a separate JSON object using the field name and url for name and url respectively.
+
+[Video description begins] She enters a command. It reads:"https://api.github.com/user/repos" |jq '. [] | {name: .name, url: .url} '. [Video description ends]
+
+Go ahead and hit Enter and you can see the response here is essentially a list of JSON entities with the name and URL for each of my repositories. I'm now going to use the GitHub APIs to make a POST request and create a new private repository. I use the -u flag to authenticate myself by specifying my user account name and token. I use the -d flag to specify my request body in the form of a JSON string.
+
+[Video description begins] The following command is highlighted: -d '{ "name" : "github_api_curl_private_repo", "private" : true}' \. [Video description ends]
+
+And the JSON to create a new private repository is simply the name of the repository, which is github_api_curl_private_repo, and the private property is set to true. Setting this property to true is what will create a private repository that no one else has access to, rather than create a public repository that is viewable by everyone, and the request is made to api.github.com/user/repos.
+
+[Video description begins] She highlights the following: "https://api.github.com/ user/repos" |jq. [Video description ends]
+
+Observe that I haven't specified anywhere that this is a POST request, but I do have a request body. When you send request data to an API using curl, curl automatically assumes that it is a POST request that you want to make. And essentially when you hit Enter, you're making a POST request to create a new private repository and it seems like this repository was successfully created. Well, the API returned a successful response, but was this repository actually created? Let's head over to the GitHub UI and check to see if this is indeed the case. I click on my profile icon on the top right and I click on Your repositories. This is where all of my repositories will be listed. You can see here on top I have the github_api_curl_private_repo. The Private tag next to it indicates that this is a private repository which others won't be able to access and see.
+
+[Video description begins] A webpage titled Your Repositories appears. It contains the following tabs: Overview, Repositories, Projects, Packages, and Stars. The left pane displays the avatar and the profile name. The main pane displays the list of various repositories. [Video description ends]
+
+We successfully used a curl request to work with the real API. Let's click through to this private repository and take a look at what it looks like. Well, it's completely empty, so this is nothing really special here. It's absolutely just the default repository. This is kind of boring so let's go back to the terminal. Here I'm going to make a curl request to create the same repository yet again, but this time, I've added in an additional -v flag to the curl command. curl -v and then -u to specify my credentials. -d with the name github_api_curl_private_repo, private: true that is the request body and the same URL as before.
+
+[Video description begins] The following command is edited: curl -v -u loonytest : ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e \. [Video description ends]
+
+Now -v will give me a verbose output. It'll show me all of the request headers and the response headers for this API request. Here at the bottom, you can see that the request returned an error message and the message says name already exists on this account.
+
+You cannot create a repository with the same name as one that already exists. That's what this error is telling us. Now that we've created this repository and seen that it exists on the UI, let's make a curl request to /user/repos and extract the names of all of the repositories. Because I've used the -v flag, once again, you'll see that we get a very verbose output with all of the headers in the request and in the response. Well, we don't really need this information here since we're not really debugging this API. But you can see the name of all of the repositories that I have here at the bottom in the response. And the last one there, github_api_curl_private_repo is the new one that we just created.
+
+Let's create another repository, this time a public repository once again by making a POST request,
+
+[Video description begins] The following commands are added. Line 1 reads: curl -u loonytest : ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e \. Line 2 reads:-d '{ "name" : "github_api_curl_public_repo", "private" : false}' \. [Video description ends]
+
+curl -u and then I specify my credentials, loonytest, and my personal access token, -d and then the JSON request body. The name of the repository is going to be github_api_curl_public_repo, and private is set to false, indicating that this repository will be publicly accessible by others. We haven't explicitly specified anywhere that this is a POST request, but the fact that we have a request body will ensure that this is indeed made as an HTTP POST. Go ahead and hit Enter and you can see that this public repository was also successfully created. Back to my account on github.com, I'm now going to head back to Your repositories to see whether this new repository that we created is available here. And yes, indeed it is, right at the top of my page, github_api_curl_public_repo.
+
+With two repos created successfully, let's go back to the terminal and make a GET request to the user repos API. Instead of viewing the complete response, we'll use jq's query parsing to extract the bits of information that we are interested in. I'm going to extract the name, url, whether the repo is private or not, and when the repo was created into a separate JSON object and here is what the result looks like.
+
+[Video description begins] She highlights a command. It reads: |jq '. [] | {name: .name, url: .url, private: .private, created_at: .created_at} '. [Video description ends]
+
+A JSON entity to represent each repository with the name, url, whether the repo is private or not, and the time the repo was created. And you can see all of our repositories, including the newly created ones are present here. Next, I'm going to make a POST request to update the name of one of our repositories. Here I use curl again, -u to specify my username and personal access token, -d to specify my request body.
+
+I want to set the new name of the repository to be git_api_pvt_repo and the repository whose name I want to change is specified in the API URL here. The URL to which I'm going to make this POST request is api.github.com/repos/loonytest and the actual repo is github_api_curl_private_repo. It's going to be renamed to git_api_pvt_repo.
+
+[Video description begins] The following commands are added. Line 1 reads: curl -u loonytest : ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e \. Line 2 reads:-d '{ "name" : "git_api_pvt_repo"}', \. Line 3 reads: "https://api.github.com/repos/loonytest/github_api_curl_private_repo" |jq. [Video description ends]
+
+Make the request and here in the response, you can see that the repository was successfully renamed. Notice its full_name. It's now the new name. Let's go back to the repositories here on GitHub. You may have to hit refresh, but you can see that my repository has been renamed. It's now git_api_pvt_repo rather than the old longer name. Back to the terminal, let's make a request to rename the other repository as well.
+
+I'm going to call it git_api_pub_repo. The repository that I'm renaming is the github_api_curl_public_repo. Go ahead and make this request. From the response, you can see that the rename was successful. Notice the full_name. It's the new name rather than the old one. Back to github.com to confirm this change with the refresh, you'll see that now both our repositories have been renamed successfully using GitHub APIs. Back to the terminal and let's use the DELETE command to delete a repository that we've created. Notice I call curl -X DELETE. Here I have to explicitly specify the http verb for my request so that curl doesn't mix it up with a GET request to that repo.
+
+The repo that I'm going to delete first is the git_api_pvt_repo and you can see that as a part of the URL.
+
+[Video description begins] The following commands are added. Line 1 reads: curl -v -X DELETE -u loonytest:ghp_88hgfKLD8tmFrMi7mQ2ndtm9CRNhsL27R04e \. Line 2 reads: "https://api.github.com/repos/loonytest/git_api_pvt_repo" |jq. [Video description ends]
+
+Go ahead and hit Enter and it seems like this repository was successfully deleted. Let's delete the other repository that we created as well curl -X DELETE and this time, we'll delete the git_api_pub_repo. Go ahead and hit Enter and from the response it seems like this repository too was successfully deleted. You can go to github.com and confirm this deletion. Instead, I'll make a GET request to my user/repos URL. I'll extract the name, url, whether the repository is private or not, and the created_at time in JSON objects. And here If you look at the JSON objects returned and you can see that our public and private repositories that we had created earlier in this video are no longer present in this list. They've been successfully deleted.
+
+15. Video: Course Summary (it_stapitdj_02_enus_15)
+
+In this video, we will summarize the key concepts covered in this course.
+summarize the key concepts covered in this course
+[Video description begins] Topic title: Course Summary. Presented by: Janani Ravi. [Video description ends]
+We've reached the end of this course, working with RESTful APIs and indeed the end of this learning path on API fundamentals. We started this course off by exploring some common free-to-use test REST APIs available on the Internet that use the JSON format for requests and responses. We viewed the different types of data available and analyzed the URL of these APIs. We then viewed network requests using Chrome DevTools. We explored the different kinds of requests such as GET and viewed the status codes in the responses. These are numeric codes assigned by HTTP that express different status messages.
+
+For example, 404 signifies page was not found, while 200 signifies that the request was processed successfully. After that, we used the Swagger UI to interact with APIs. Swagger is a tool that allows you to send requests and view responses from APIs in an interactive user interface. Next, we explored how to use the cURL utility. This is an extremely powerful tool allowing you to send requests to APIs using shell commands, allowing us to script API requests. It's an extremely old and widely used tool, having been around since 1998. We explored how to place GET requests using cURL and specified headers for our requests. Headers allowed us to specify special information about our requests, such as the format in which to send the response.
+
+We then worked with POST requests to add new resources, PUT and PATCH requests to completely and partially update resources respectively, and DELETE requests to remove resources. Finally, we learned how to use some real-world APIs for GitHub. GitHub is a widely used version control system that allows users to create and manage their repositories using REST APIs. While all the APIs we worked with previously were test APIs with dummy data, GitHub was our foray into real-world use cases of APIs. We set up a GitHub account and generated a personal access token to authenticate ourselves. We then used POST request to create repositories and also used GET, PUT, PATCH, and DELETE request to manage our repos. In conclusion, this course has provided us with a strong foundation in the basics of REST APIs, equipping us to move on to API testing with Postman, coming up ahead.
+
+Course File-based Resources
+•	Introducing API Fundamentals & Testing: Working with RESTful APIs
+Topic Asset
+© 2023 Skillsoft Ireland Limited - All rights reserved.
